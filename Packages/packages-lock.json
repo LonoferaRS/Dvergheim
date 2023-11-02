@@ -94,7 +94,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.8",
+      "version": "1.8.9",
       "depth": 3,
       "source": "registry",
       "dependencies": {
@@ -142,7 +142,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
+      "version": "3.0.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -151,7 +151,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.21",
       "depth": 0,
       "source": "registry",
       "dependencies": {
