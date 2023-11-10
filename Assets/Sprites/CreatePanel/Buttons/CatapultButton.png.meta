@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      CatapultButton_0: 1122242703257464713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

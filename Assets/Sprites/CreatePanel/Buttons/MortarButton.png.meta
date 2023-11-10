@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MortarButton_0: -1263651226730611554
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

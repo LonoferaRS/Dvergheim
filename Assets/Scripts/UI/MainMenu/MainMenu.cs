@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-   public void Playgame()
+   public void PlayGame()
     {
          SceneManager.LoadScene(1);
     }
-    public void Quit()
+    public void ExitGame()
     {
             Application.Quit();
     }
