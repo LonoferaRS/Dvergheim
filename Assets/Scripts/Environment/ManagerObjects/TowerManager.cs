@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,19 @@ public class TowerManager : MonoBehaviour
 
 
     private Dictionary<Vector3Int, GameObject> towers = new Dictionary<Vector3Int, GameObject>();
+    private List<GameObject> panels = new List<GameObject>();
 
+    private Tilemap grassTilemap;
+
+    private Vector3Int currentTilePosition;
+    [SerializeField] private GameObject createPanel;
     [SerializeField] private GameObject ballistaPrefab;
+    [SerializeField] private GameObject cannonPrefab;
+    [SerializeField] private GameObject mortarPrefab;
+    [SerializeField] private GameObject catapultPrefab;
+    [SerializeField] private GameObject minePrefab;
 
-    private Tilemap grassTilemap; 
+    private bool isAnyPanelIsActive = false;
 
 
 
@@ -32,7 +42,25 @@ public class TowerManager : MonoBehaviour
 
         grassTilemap = GetGrassTilemap();
 
-        Debug.Log($"grassTilemap is null? = {grassTilemap == null}");
+        panels.Add(createPanel);
+    }
+
+
+
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && isAnyPanelIsActive)
+        {
+            foreach (GameObject panel in panels)
+            { 
+                panel.SetActive(false);
+            }
+
+            Time.timeScale = 1.0f;
+            isAnyPanelIsActive = false;
+        }
     }
 
 
@@ -59,13 +87,17 @@ public class TowerManager : MonoBehaviour
 
     public void ReciveTilePosition(Vector3Int tilePosition)
     {
-        if (towers.ContainsKey(tilePosition))
+        if (!isAnyPanelIsActive)
         {
-            Debug.Log("Это место занято другой постройкой");
-        }
-        else 
-        {
-            SetTower(tilePosition);
+            if (towers.ContainsKey(tilePosition))
+            {
+                Debug.Log("Это место занято другой постройкой");
+            }
+            else
+            {
+                currentTilePosition = tilePosition;
+                ShowCreatePanel();
+            }
         }
     }
 
@@ -73,21 +105,53 @@ public class TowerManager : MonoBehaviour
 
 
 
-    private void SetTower(Vector3Int tilePosition)
+    private void ShowCreatePanel()
     {
-        if (ballistaPrefab != null)
-        {
-            // Инстанцирую баллисту
-            GameObject ballista = Instantiate(ballistaPrefab);
+        createPanel.gameObject.SetActive(true);
+        isAnyPanelIsActive = true;
+    }
 
-            // Устанавливаю позицию баллисте
-            ballista.transform.position = GetCenterTilePositionInWorld(tilePosition);
+
+
+
+
+    private void HideCreatePanel()
+    {
+        createPanel.gameObject.SetActive(false);
+        isAnyPanelIsActive = false;
+    }
+
+
+
+
+
+    public void SetTower(GameObject prefab)
+    {
+        if (prefab != null)
+        {
+            // Инстанцирую башню
+            GameObject tower = Instantiate(prefab);
+
+            // Устанавливаю позицию башне
+            tower.transform.position = GetCenterTilePositionInWorld(currentTilePosition);
 
             // Добавляю в словарь
-            towers[tilePosition] = ballista;
+            towers[currentTilePosition] = tower;
         }
-        else { Debug.Log("Не удалось установить баллисту, так как ballistaPrefab is null"); }
+        else { Debug.Log("Не удалось установить башню, так как prefab is null"); }
+
+        HideCreatePanel();
     }
+    public void SetBallista() => SetTower(ballistaPrefab);
+    public void SetCannon() => SetTower(cannonPrefab);
+    public void SetMortar() => SetTower(mortarPrefab);
+    public void SetCatapult() => SetTower(catapultPrefab);
+    public void SetMine() => SetTower(minePrefab);
+
+
+
+
+
 
 
 
