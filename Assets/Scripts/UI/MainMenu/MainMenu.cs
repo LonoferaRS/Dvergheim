@@ -5,16 +5,34 @@ using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+    public float ButtonDelay = 0.2f;
    public void PlayGame()
     {
-         SceneManager.LoadScene(1);
+        StartCoroutine(Load(1));
     }
     public void ExitGame()
     {
-            Application.Quit();
+        StartCoroutine(Quit());
     }
     public void Options()
     {
-        SceneManager.LoadScene(2);
+        StartCoroutine(Load(2));
+    }
+    void PlayButtonSound()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+    IEnumerator Load(int x) 
+    {
+        PlayButtonSound();
+        yield return new WaitForSeconds(ButtonDelay);
+        SceneManager.LoadScene(x);
+    }
+    IEnumerator Quit()
+    {
+        PlayButtonSound();
+        yield return new WaitForSeconds(ButtonDelay);
+        Application.Quit();
     }
 }
+
