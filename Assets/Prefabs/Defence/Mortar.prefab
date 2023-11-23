@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1703821499878766445}
   - component: {fileID: -6932149181696952602}
+  - component: {fileID: -5588382322136358669}
   m_Layer: 0
   m_Name: Mortar
   m_TagString: Untagged
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-5588382322136358669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253595230315177250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bebe7a3fc163e4fab4d78c8f5f1593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

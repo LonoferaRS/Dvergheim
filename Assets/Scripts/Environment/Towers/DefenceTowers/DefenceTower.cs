@@ -10,10 +10,10 @@ public class DefenceTower : Tower
     private GameObject currentTarget;
     
     // Радиус обнаружения
-    private float AimRadius = 5;
+    private float AimRadius = 7;
 
     // Скорость поворота башни
-    private float rotationSpeed = 70f;
+    private float rotationSpeed = 500f;
 
 
 
@@ -41,26 +41,22 @@ public class DefenceTower : Tower
 
             if (enemies.Length > 0)
             {
-                if (enemies.Length == 1) { currentTarget = enemies.First(); }
-                else
+                (float distance, GameObject enemy) nearestEnemy = (float.MaxValue, null);
+
+                foreach (GameObject enemy in enemies)
                 {
-                    (float distance, GameObject enemy) nearestEnemy = (float.MaxValue, null);
+                    float newDist = CountDistance(enemy);
 
-                    foreach (GameObject enemy in enemies)
+                    if (newDist < AimRadius)
                     {
-                        float newDist = CountDistance(enemy);
-
-                        if (newDist < AimRadius)
-                        {
-                            Debug.Log($"Дистанция до цели ({newDist}) в радиусе обнаружения ({AimRadius})");
-                            nearestEnemy = nearestEnemy.distance > newDist ? (newDist, enemy) : nearestEnemy;
-                        }
+                        //Debug.Log($"Дистанция до цели ({newDist}) в радиусе обнаружения ({AimRadius})");
+                        nearestEnemy = nearestEnemy.distance > newDist ? (newDist, enemy) : nearestEnemy;
                     }
-
-                    currentTarget = nearestEnemy.enemy;
-
-                    Debug.Log($"Имя ближайшего объекта = {currentTarget?.name ?? "null"}");
                 }
+
+                currentTarget = nearestEnemy.enemy;
+
+                //Debug.Log($"Имя ближайшего объекта = {currentTarget?.name ?? "null"}");
             }
         }
         else if (currentTarget != null)
@@ -100,7 +96,7 @@ public class DefenceTower : Tower
         // Получаем угол наведения при помощи LookRotation
         Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
 
-        // Рассчитываем кратчайший путь вращения и получаем новое вращение
+        // Поворачиваем башню
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
     }
 }
