@@ -11,5 +11,6 @@ public class Mortar : DefenceTower
     {
         damage = 500;
         armorDecreaseConst = 0.4f;
+        shootingCooldown = 8f;
     }
 }

@@ -9,6 +9,8 @@ public class DefenceTower : Tower
     public float damage { get; protected set; }
     public float armorDecreaseConst { get; protected set; }
 
+    public float shootingCooldown { get; protected set; }
+
     private GameObject currentTarget;
     
     // Радиус обнаружения
@@ -16,6 +18,12 @@ public class DefenceTower : Tower
 
     // Скорость поворота башни
     private float rotationSpeed = 500f;
+
+    // Угол, при котором считаем, что башня наведена на цель
+    private float aimingThreshold = 1f;
+
+    private bool isShooting = false;
+    
 
 
 
@@ -63,7 +71,14 @@ public class DefenceTower : Tower
         }
         else if (currentTarget != null)
         {
+            // Наводимся на найденную цель
             AimOn(currentTarget);
+
+            // Если навелись - стреляем
+            if (IsAimed() && !isShooting)
+            {
+                StartCoroutine(ShootCoroutine());
+            }
         }
     }
 
@@ -100,5 +115,52 @@ public class DefenceTower : Tower
 
         // Поворачиваем башню
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+    }
+
+
+
+
+
+    // Провереяет наведена ли башня на врага
+    private bool IsAimed()
+    {
+        Vector3 targetPosition = currentTarget.transform.position;
+        Vector3 direction = targetPosition - transform.position;
+
+        // Получаем угол наведения при помощи LookRotation
+        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+        // Рассчитываем разницу в углах
+        float angleDifference = Quaternion.Angle(transform.rotation, lookRotation);
+
+        // Возвращаем true, если разница меньше порогового значения
+        return angleDifference < aimingThreshold;
+    }
+
+
+
+
+
+
+    // Вызывает метод Shoot с учетом перезарядки
+    private IEnumerator ShootCoroutine()
+    {
+        isShooting = true;
+
+        Shoot();
+
+        yield return new WaitForSeconds(shootingCooldown);
+
+        isShooting = false;
+    }
+
+
+
+
+
+    
+    private void Shoot()
+    {
+        Debug.Log($"{name} is shooting");
     }
 }
