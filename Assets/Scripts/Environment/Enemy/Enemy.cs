@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
+    protected float healthPoints = 100f;
+    protected float armorPoints = 0f;
+
     public float moveSpeed = 5f;
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();

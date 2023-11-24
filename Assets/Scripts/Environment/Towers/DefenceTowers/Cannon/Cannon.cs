@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class Cannon : DefenceTower
 {
-
+    public void Awake()
+    {
+        damage = 500;
+        armorDecreaseConst = 0.5f;
+    }
 }

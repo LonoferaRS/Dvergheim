@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Catapult : DefenceTower
 {
-
+    private void Awake()
+    {
+        damage = 100f;
+    }
 }

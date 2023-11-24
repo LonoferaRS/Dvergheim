@@ -6,6 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class DefenceTower : Tower
 {
+    public float damage { get; protected set; }
+    public float armorDecreaseConst { get; protected set; }
 
     private GameObject currentTarget;
     
