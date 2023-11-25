@@ -106,6 +106,8 @@ public class DefenceTower : Tower
 
 
 
+
+    public Vector3 predicatedPosition { get; private set; }
     private Vector3 predicatedDirection;
 
     // Наводит ось Y башни на цель
@@ -118,11 +120,10 @@ public class DefenceTower : Tower
         Vector2 targetVelocity = enemy != null ? enemy.velocity : Vector2.zero;
 
         // Получаем предполагаемую позицию
-        Vector3 predicatedPosition = PrefirePosition(targetPosition, targetVelocity);
+        predicatedPosition = PrefirePosition(targetPosition, targetVelocity);
 
         // Получаем направление на ход цели
         predicatedDirection = (predicatedPosition - transform.position).normalized;
-        Debug.Log($"predicatedDirection = {predicatedDirection}");
 
         // Получаем угол наведения при помощи LookRotation
         Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, predicatedDirection);
@@ -130,6 +131,7 @@ public class DefenceTower : Tower
         // Поворачиваем башню
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
     }
+
 
 
 
@@ -171,16 +173,14 @@ public class DefenceTower : Tower
 
 
 
-    
-    private void Shoot()
+    protected GameObject currentShell { get; private set; }
+    protected virtual void Shoot()
     {
-        GameObject shell = Instantiate(shellPrefab, transform.position, transform.rotation);
+        currentShell = Instantiate(shellPrefab, transform.position, transform.rotation);
 
-        //Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
+        currentShell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
 
-        shell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
-
-        Destroy(shell, shellLifetime);
+        Destroy(currentShell, shellLifetime);
 
         Debug.Log($"{name} is shooting");
     }
@@ -190,10 +190,11 @@ public class DefenceTower : Tower
 
 
 
+    public float timeToTarget { get; private set; }
     // Вернет предпологаемую позицию позицию с учетом времени полета снаряда и расстояния до цели
     private Vector3 PrefirePosition(Vector3 targetPosition, Vector2 targetVelocity)
     {
-        float timeToTarget = Vector3.Distance(transform.position, targetPosition) / shellSpeed;
+        timeToTarget = Vector3.Distance(transform.position, targetPosition) / shellSpeed;
 
         Vector3 predictedPosition = targetPosition + new Vector3(targetVelocity.x, targetVelocity.y, 0) * timeToTarget;
 

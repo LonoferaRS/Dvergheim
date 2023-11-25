@@ -9,5 +9,6 @@ public class Cannon : DefenceTower
         damage = 500;
         armorDecreaseConst = 0.5f;
         shootingCooldown = 5f;
+        shellSpeed = 40f;
     }
 }
