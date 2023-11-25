@@ -6,10 +6,13 @@ using static UnityEngine.GraphicsBuffer;
 
 public class DefenceTower : Tower
 {
+    [SerializeField] private GameObject shellPrefab;
     public float damage { get; protected set; }
     public float armorDecreaseConst { get; protected set; }
-
     public float shootingCooldown { get; protected set; }
+    public float shellSpeed { get; protected set; }
+    public float shellLifetime { get; protected set; } = 2f;
+
 
     private GameObject currentTarget;
     
@@ -103,15 +106,26 @@ public class DefenceTower : Tower
 
 
 
+    private Vector3 predicatedDirection;
 
     // Наводит ось Y башни на цель
     private void AimOn(GameObject target)
     {
         Vector3 targetPosition = target.transform.position;
-        Vector3 direction = targetPosition - transform.position;
+
+        // Получаем скорость цели
+        Enemy enemy = target.GetComponent<Enemy>();
+        Vector2 targetVelocity = enemy != null ? enemy.velocity : Vector2.zero;
+
+        // Получаем предполагаемую позицию
+        Vector3 predicatedPosition = PrefirePosition(targetPosition, targetVelocity);
+
+        // Получаем направление на ход цели
+        predicatedDirection = (predicatedPosition - transform.position).normalized;
+        Debug.Log($"predicatedDirection = {predicatedDirection}");
 
         // Получаем угол наведения при помощи LookRotation
-        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
+        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, predicatedDirection);
 
         // Поворачиваем башню
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
@@ -125,10 +139,9 @@ public class DefenceTower : Tower
     private bool IsAimed()
     {
         Vector3 targetPosition = currentTarget.transform.position;
-        Vector3 direction = targetPosition - transform.position;
 
         // Получаем угол наведения при помощи LookRotation
-        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
+        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, predicatedDirection);
 
         // Рассчитываем разницу в углах
         float angleDifference = Quaternion.Angle(transform.rotation, lookRotation);
@@ -161,6 +174,29 @@ public class DefenceTower : Tower
     
     private void Shoot()
     {
+        GameObject shell = Instantiate(shellPrefab, transform.position, transform.rotation);
+
+        //Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
+
+        shell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
+
+        Destroy(shell, shellLifetime);
+
         Debug.Log($"{name} is shooting");
+    }
+
+
+
+
+
+
+    // Вернет предпологаемую позицию позицию с учетом времени полета снаряда и расстояния до цели
+    private Vector3 PrefirePosition(Vector3 targetPosition, Vector2 targetVelocity)
+    {
+        float timeToTarget = Vector3.Distance(transform.position, targetPosition) / shellSpeed;
+
+        Vector3 predictedPosition = targetPosition + new Vector3(targetVelocity.x, targetVelocity.y, 0) * timeToTarget;
+
+        return predictedPosition;
     }
 }

@@ -6,9 +6,12 @@ public class Enemy : MonoBehaviour
     protected float healthPoints = 100f;
     protected float armorPoints = 0f;
 
-    public float moveSpeed = 5f;
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();
+    public Vector2 velocity { get; private set; }
+    public float moveSpeed { get; protected set; } = 5f;
+
+
 
     void Start()
     {
@@ -30,8 +33,14 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        // Движение к текущей путевой точке
-        transform.position = Vector2.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+        // Получаем вектор движения к точке
+        Vector2 movementVector = Vector2.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+
+        // Получаю скорость
+        velocity = (movementVector - (Vector2)transform.position) / Time.deltaTime;
+
+        // Применяем вектор движения к точке
+        transform.position = movementVector;
 
         // Если достигнута текущая путевая точка, добавить ее в список посещенных и найти следующую
         if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.1f)

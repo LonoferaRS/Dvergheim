@@ -9,5 +9,6 @@ public class Ballista : DefenceTower
         damage = 100f;
         armorDecreaseConst = 0.35f;
         shootingCooldown = 1f;
+        shellSpeed = 20f;
     }
 }
