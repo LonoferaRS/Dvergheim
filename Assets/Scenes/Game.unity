@@ -801,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4754fbd4f416c4f9088928323f24dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 4584690013540796713, guid: 4ea323dd7565dea47aaaaae9bb50881f, type: 3}
+  objectToSpawn: {fileID: 8642772133260691458, guid: 5438bc9b3cb028244a8af9a3b5c55093, type: 3}
   spawnPoints:
   - {fileID: 598094477}
   - {fileID: 569570799}
