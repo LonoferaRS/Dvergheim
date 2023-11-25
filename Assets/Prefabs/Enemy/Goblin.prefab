@@ -109,6 +109,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8642772133260691458}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -132,9 +133,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.265625}
-  serializedVersion: 2
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
   m_Radius: 0.1875
 --- !u!50 &4937819483786073729
 Rigidbody2D:
@@ -222,6 +223,14 @@ PrefabInstance:
     - target: {fileID: 2631678921264874480, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_Name
       value: StatsWithoutArmor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247286314007190341, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247286314007190341, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
