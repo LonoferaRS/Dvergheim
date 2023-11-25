@@ -1,10 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    protected float healthPoints = 100f;
-    protected float armorPoints = 0f;
+    [SerializeField] private Slider healthBarSlider;
+    [SerializeField] private Slider armorBarSlider;
+
+    protected float startHealth;
+    protected float startArmor;
+    protected float healthPoints = 600f;
+    protected float armorPoints = 110f;
 
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();
@@ -17,6 +23,12 @@ public class Enemy : MonoBehaviour
     {
         // Найти ближайшую путевую точку при старте
         FindNearestWaypoint();
+
+        // Запоминаем начальное количество HP
+        startHealth = healthPoints;
+
+        // Запоминаем начальное количество брони
+        startArmor = armorPoints;
     }
 
     void Update()
@@ -83,5 +95,65 @@ public class Enemy : MonoBehaviour
 
         // Установить новую путевую точку
         targetWaypoint = nearestWaypoint;
+    }
+
+
+
+
+
+
+    public void TakeDamage(float damage, float armorDecreaseConst)
+    {
+        if (armorPoints > 0)
+        {
+            TakeDamageOnArmor(damage, armorDecreaseConst);
+        }
+        else
+        {
+            TakeDamageOnHealth(damage);
+        }
+
+        // Меняем количество HP в HealthBar
+        float currentHealthPercent = 100 * healthPoints / startHealth;
+        healthBarSlider.value = currentHealthPercent / 100;
+
+        // Меняем количество брони в ArmorBar
+        float currentArmorPetcent = 100 * armorPoints / startArmor;
+        armorBarSlider.value = currentArmorPetcent / 100;
+
+
+        if (healthPoints == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
+
+
+    private void TakeDamageOnArmor(float damage, float armorDecreaseConst)
+    {
+        float armorAfterDamage = armorPoints - damage * armorDecreaseConst;
+
+        if (armorAfterDamage >= 0)
+        {
+            armorPoints -= damage * armorDecreaseConst;
+        }
+        else if (armorAfterDamage < 0)
+        {
+            armorPoints = 0;
+            TakeDamageOnHealth(armorAfterDamage * -1);
+        }
+    }
+
+
+
+
+
+    private void TakeDamageOnHealth(float damage)
+    {
+        float healthAfterDamage = healthPoints - damage;
+        healthPoints = healthAfterDamage > 0 ? healthAfterDamage : 0;
     }
 }
