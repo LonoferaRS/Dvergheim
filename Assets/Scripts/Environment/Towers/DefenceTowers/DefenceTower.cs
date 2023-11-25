@@ -6,12 +6,10 @@ using static UnityEngine.GraphicsBuffer;
 
 public class DefenceTower : Tower
 {
-    [SerializeField] private GameObject shellPrefab;
-    public float damage { get; protected set; }
-    public float armorDecreaseConst { get; protected set; }
+    [SerializeField] protected GameObject shellPrefab;
     public float shootingCooldown { get; protected set; }
+
     public float shellSpeed { get; protected set; }
-    public float shellLifetime { get; protected set; } = 2f;
 
 
     private GameObject currentTarget;
@@ -173,14 +171,12 @@ public class DefenceTower : Tower
 
 
 
-    protected GameObject currentShell { get; private set; }
+    public GameObject currentShell { get; protected set; }
     protected virtual void Shoot()
     {
         currentShell = Instantiate(shellPrefab, transform.position, transform.rotation);
 
         currentShell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
-
-        Destroy(currentShell, shellLifetime);
 
         Debug.Log($"{name} is shooting");
     }
@@ -191,9 +187,11 @@ public class DefenceTower : Tower
 
 
     public float timeToTarget { get; private set; }
+
     // ¬ернет предпологаемую позицию позицию с учетом времени полета снар€да и рассто€ни€ до цели
     private Vector3 PrefirePosition(Vector3 targetPosition, Vector2 targetVelocity)
     {
+
         timeToTarget = Vector3.Distance(transform.position, targetPosition) / shellSpeed;
 
         Vector3 predictedPosition = targetPosition + new Vector3(targetVelocity.x, targetVelocity.y, 0) * timeToTarget;

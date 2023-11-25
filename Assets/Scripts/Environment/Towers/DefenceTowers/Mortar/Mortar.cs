@@ -15,8 +15,6 @@ public class Mortar : DefenceTower
 
     private void Awake()
     {
-        damage = 500;
-        armorDecreaseConst = 0.4f;
         shootingCooldown = 8f;
         shellSpeed = 8f;
     }
