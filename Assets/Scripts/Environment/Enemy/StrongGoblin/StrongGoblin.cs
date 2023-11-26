@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class StrongGoblin : Enemy
+public class StrongGoblin : Goblin
 {
-    protected new float healthPoints = 200f;
-    protected new float armorPoints = 0f;
+    
+    private void Awake()
+    {
+        healthPoints = 200f;
+        armorPoints = 0f;
+    }
+
 }
