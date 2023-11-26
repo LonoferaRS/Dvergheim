@@ -813,8 +813,12 @@ MonoBehaviour:
   - {fileID: 951608160}
   - {fileID: 1979356655}
   - {fileID: 1544936594}
-  minSpawnTime: 1
-  maxSpawnTime: 2
+  timeBeforeFirstWave: 5
+  timeBetweenWaves: 20
+  initialWaveSize: 3
+  maxAdditionalEnemies: 4
+  minAdditionalEnemies: 2
+  maxWaves: 10
 --- !u!1 &292084422
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,7 +3730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1281793960999220586, guid: 89ca250c65c2cec429539be916f437ed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.140715
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 1281793960999220586, guid: 89ca250c65c2cec429539be916f437ed, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5508,7 +5512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356954708282526263, guid: 60fdaf84e65bb1a49ad32c2e0ca4f1d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.731502
+      value: 16.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356954708282526263, guid: 60fdaf84e65bb1a49ad32c2e0ca4f1d1, type: 3}
       propertyPath: m_LocalPosition.z

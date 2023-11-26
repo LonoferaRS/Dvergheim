@@ -33,7 +33,6 @@ public class MainTower : MonoBehaviour
     void GameOver()
     {
         isGameOver = true;
-
         // Останавливаем игру 
         Time.timeScale = 0f;
     }

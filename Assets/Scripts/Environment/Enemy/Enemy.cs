@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();
     public Vector2 velocity { get; private set; }
-    public float moveSpeed { get; protected set; } = 5f;
+    [SerializeField] public float moveSpeed { get; protected set; } = 3f;
 
 
 
