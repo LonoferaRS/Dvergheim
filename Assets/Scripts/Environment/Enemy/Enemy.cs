@@ -5,13 +5,10 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Slider healthBarSlider;
-    [SerializeField] private Slider armorBarSlider;
-
     protected float startHealth;
     protected float startArmor;
-    protected float healthPoints = 600f;
-    protected float armorPoints = 110f;
+    public float healthPoints { get; protected set; } = 100f;
+    public float armorPoints { get; protected set; } = 0f;
 
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();
@@ -106,7 +103,7 @@ public class Enemy : MonoBehaviour
 
 
 
-    public void TakeDamage(float damage, float armorDecreaseConst)
+    public virtual void TakeDamage(float damage, float armorDecreaseConst)
     {
         if (armorPoints > 0)
         {
@@ -116,15 +113,6 @@ public class Enemy : MonoBehaviour
         {
             TakeDamageOnHealth(damage);
         }
-
-        // Меняем количество HP в HealthBar
-        float currentHealthPercent = 100 * healthPoints / startHealth;
-        healthBarSlider.value = currentHealthPercent / 100;
-
-        // Меняем количество брони в ArmorBar
-        float currentArmorPetcent = 100 * armorPoints / startArmor;
-        armorBarSlider.value = currentArmorPetcent / 100;
-
 
         if (healthPoints == 0)
         {
