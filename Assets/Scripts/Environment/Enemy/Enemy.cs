@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,10 +18,13 @@ public class Enemy : MonoBehaviour
     public Vector2 velocity { get; private set; }
     [SerializeField] public float moveSpeed { get; protected set; } = 3f;
 
-
+    public AudioClip deathSound; // Звук смерти гоблина
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         // Найти ближайшую путевую точку при старте
         FindNearestWaypoint();
 
@@ -124,11 +128,23 @@ public class Enemy : MonoBehaviour
 
         if (healthPoints == 0)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
 
+    // Метод для обработки смерти гоблина
+    void Die()
+    {
+        // Проигрываем звук смерти
+        if (deathSound != null && audioSource != null)
+        {
+            audioSource.clip = deathSound;
+            audioSource.Play();
+        }
+        // Дополнительные действия при смерти гоблина
+        Destroy(gameObject);
+    }
 
 
 

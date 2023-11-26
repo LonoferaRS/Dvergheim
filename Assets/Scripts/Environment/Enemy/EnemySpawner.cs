@@ -15,8 +15,13 @@ public class ObjectSpawner : MonoBehaviour
     private int currentWaveNumber; // Текущий номер волны
     private bool isGameFinished = false; // Флаг, указывающий, завершена ли игра
 
+
+    public AudioClip waveStartSound;
+    private AudioSource audioSource;
+
     void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
         currentWaveNumber = 1;
         // Ждем перед появлением первой волны
         StartCoroutine(DelayedStart());
@@ -32,6 +37,13 @@ public class ObjectSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(int waveSize)
     {
+        // Проигрываем звук начала волны
+        if (waveStartSound != null)
+        {
+            audioSource.clip = waveStartSound;
+            audioSource.Play();
+        }
+
         for (int i = 0; i < waveSize; i++)
         {
             // Выбираем случайную точку спавна
