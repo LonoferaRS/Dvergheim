@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4443723937887908170}
   - component: {fileID: 967674028263944547}
-  - component: {fileID: 66071470888580979}
   - component: {fileID: 7098899481231311076}
   - component: {fileID: 4937819483786073729}
   - component: {fileID: 2977545043803632343}
@@ -90,24 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &66071470888580979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8642772133260691458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4fe0778c98a54d9a9d590c98ea5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinSounds:
-  - {fileID: 8300000, guid: 404a254d74f1db340b0936aeb9fede29, type: 3}
-  - {fileID: 8300000, guid: bff851591d948494695f9e0cc6dbae6c, type: 3}
-  - {fileID: 8300000, guid: 01c97a9a3c6dd224aad3e3fde3df90e2, type: 3}
-  minTimeBetweenSounds: 3
-  maxTimeBetweenSounds: 5
 --- !u!58 &7098899481231311076
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -116,7 +97,6 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8642772133260691458}
   m_Enabled: 1
-  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -140,9 +120,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
   m_Radius: 0.1875
 --- !u!50 &4937819483786073729
 Rigidbody2D:
@@ -181,7 +161,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.2
   m_Pitch: 1
@@ -279,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d705714dca7f544b8d6487fa3af516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  deathEffectPrefab: {fileID: 1272173338048324461, guid: cade21e618d5fa148b3329c56dcd9956, type: 3}
   healthBarSlider: {fileID: 8552680648183104510}
 --- !u!1001 &3752970766116192694
 PrefabInstance:

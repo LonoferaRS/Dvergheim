@@ -22,13 +22,19 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private GameObject catapultPrefab;
     [SerializeField] private GameObject minePrefab;
 
-    private bool isAnyPanelIsActive = false;
+    public static bool isAnyPanelIsActive = false;
 
-
-
+    //
+    public AudioClip[] soundClips; // Массив звуков
+    private AudioSource audioSource;
+    //
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+
+
         if (instance == null)
         {
             instance = this;
@@ -91,7 +97,9 @@ public class TowerManager : MonoBehaviour
         {
             if (towers.ContainsKey(tilePosition))
             {
+
                 Debug.Log("Это место занято другой постройкой");
+                PlaySound(0);
             }
             else
             {
@@ -137,6 +145,7 @@ public class TowerManager : MonoBehaviour
 
             // Добавляю в словарь
             towers[currentTilePosition] = tower;
+            PlayRandomBuildSound();
         }
         else { Debug.Log("Не удалось установить башню, так как prefab is null"); }
 
@@ -161,4 +170,48 @@ public class TowerManager : MonoBehaviour
     {
         return grassTilemap.CellToWorld(tilePosition) + grassTilemap.cellSize * 0.5f;
     }
+
+
+
+    // Метод для проигрывания конкретного звука по индексу в массиве
+    void PlaySound(int soundIndex)
+    {
+        // Проверяем, чтобы индекс не выходил за пределы массива
+        if (soundIndex >= 0 && soundIndex < soundClips.Length)
+        {
+            // Устанавливаем выбранный звук в Audio Source
+            audioSource.clip = soundClips[soundIndex];
+
+            // Проигрываем звук
+            audioSource.Play();
+        }
+        else
+        {
+            // Выводим предупреждение в консоль, если индекс некорректен
+            Debug.LogWarning("Invalid sound index.");
+        }
+    }
+
+    void PlayRandomBuildSound()
+    {
+        // Генерируем случайный индекс
+        int randomIndex = Random.Range(1, soundClips.Length);
+
+        // Устанавливаем выбранный звук в Audio Source
+        audioSource.clip = soundClips[randomIndex];
+
+        // Проигрываем звук
+        audioSource.Play();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
