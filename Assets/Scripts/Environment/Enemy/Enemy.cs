@@ -18,15 +18,14 @@ public class Enemy : MonoBehaviour
     public Vector2 velocity { get; private set; }
     [SerializeField] public float moveSpeed { get; protected set; } = 3f;
 
-    public AudioClip deathSound; // Звук смерти гоблина
-    private AudioSource audioSource;
-
     private MainTower mainTower;
+    private bool isAlive = true;
+
+    public GameObject deathEffectPrefab; // Префаб эффекта смерти
+
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
         // Найти ближайшую путевую точку при старте
         FindNearestWaypoint();
 
@@ -43,7 +42,10 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // Перемещение к текущей путевой точке
-        MoveToWaypoint();
+        if (isAlive)
+        {
+            MoveToWaypoint();
+        }
     }
 
     void MoveToWaypoint()
@@ -132,20 +134,12 @@ public class Enemy : MonoBehaviour
     // Метод для обработки смерти гоблина
     void Die()
     {
-        // Проигрываем звук смерти
-        if (deathSound != null && audioSource != null)
-        {
-            audioSource.clip = deathSound;
-            audioSource.Play();
-        }
+        GameObject deathEffectObject = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
         // Получаем награду за смерть Enemy в виде HP
         mainTower.IncreaseHealth(costForDeath);
-
         Destroy(gameObject);
     }
-
-
 
     private void TakeDamageOnArmor(float damage, float armorDecreaseConst)
     {
