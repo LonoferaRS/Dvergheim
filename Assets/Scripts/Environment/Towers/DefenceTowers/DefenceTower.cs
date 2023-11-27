@@ -75,8 +75,11 @@ public class DefenceTower : Tower
             // Наводимся на найденную цель
             AimOn(currentTarget);
 
+            // Получаю компонент Enemy
+            Enemy enemy = currentTarget.GetComponent<Enemy>();
+
             // Если навелись - стреляем
-            if (IsAimed() && !isShooting)
+            if (IsAimed() && !isShooting && !enemy.invulable)
             {
                 StartCoroutine(ShootCoroutine());
             }
