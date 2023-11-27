@@ -22,7 +22,9 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private GameObject catapultPrefab;
     [SerializeField] private GameObject minePrefab;
 
+
     public static bool isAnyPanelIsActive = false;
+
 
     //
     public AudioClip[] soundClips; // Массив звуков
