@@ -13,6 +13,7 @@ public class ArmoredGoblin : Enemy
     {
         healthPoints = 100f;
         armorPoints = 100f;
+        damage = 50;
     }
 
 

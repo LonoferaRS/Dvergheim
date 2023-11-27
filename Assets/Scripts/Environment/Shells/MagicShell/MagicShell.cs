@@ -7,7 +7,7 @@ public class MagicShell : BaseShell
     private void Awake()
     {
         damage = 100f;
-        armorDecreaseConst = 1;
+        armorDecreaseConst = 0.75f;
         shellLifetime = 2f;
     }
 

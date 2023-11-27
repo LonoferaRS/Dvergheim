@@ -12,6 +12,7 @@ public class Goblin : Enemy
     {
         healthPoints = 100f;
         armorPoints = 0f;
+        damage = 50f;
     }
 
 

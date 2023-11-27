@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Mortar : DefenceTower
 {
+    public static float _cost { get; private set; } = 600f;
     public float splashHPConst { get; private set; } = 2f;
     public float splashArmorConst { get; private set; } = 4f;
 
@@ -17,6 +19,7 @@ public class Mortar : DefenceTower
     {
         shootingCooldown = 8f;
         shellSpeed = 8f;
+        cost = _cost;
     }
 
 

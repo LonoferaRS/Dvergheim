@@ -9,5 +9,6 @@ public class GoblinJuggernaut : ArmoredGoblin
     {
         healthPoints = 100f;
         armorPoints = 500f;
+        damage = 500f;
     }
 }
