@@ -16,13 +16,14 @@ public class TowerManager : MonoBehaviour
 
     private Vector3Int currentTilePosition;
     [SerializeField] private GameObject createPanel;
+    [SerializeField] private GameObject exitPanel;
     [SerializeField] private GameObject ballistaPrefab;
     [SerializeField] private GameObject cannonPrefab;
     [SerializeField] private GameObject mortarPrefab;
     [SerializeField] private GameObject catapultPrefab;
     [SerializeField] private GameObject minePrefab;
 
-    private bool isAnyPanelIsActive = false;
+    public bool isAnyPanelIsActive { get; set; } = false;
 
 
 
@@ -38,11 +39,10 @@ public class TowerManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
-
         grassTilemap = GetGrassTilemap();
 
         panels.Add(createPanel);
+        panels.Add(exitPanel);
     }
 
 
@@ -54,12 +54,17 @@ public class TowerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && isAnyPanelIsActive)
         {
             foreach (GameObject panel in panels)
-            { 
+            {
                 panel.SetActive(false);
             }
 
             Time.timeScale = 1.0f;
             isAnyPanelIsActive = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && !isAnyPanelIsActive)
+        { 
+            exitPanel.SetActive(true);
+            isAnyPanelIsActive = true;
         }
     }
 
