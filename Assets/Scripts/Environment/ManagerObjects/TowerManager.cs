@@ -23,21 +23,13 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private GameObject catapultPrefab;
     [SerializeField] private GameObject minePrefab;
 
+    public bool isAnyPanelIsActive { get; set; } = false;
 
-    public static bool isAnyPanelIsActive = false;
 
 
-    //
-    public AudioClip[] soundClips; // Ìàññèâ çâóêîâ
-    private AudioSource audioSource;
-    //
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
-
-
         if (instance == null)
         {
             instance = this;
@@ -104,9 +96,7 @@ public class TowerManager : MonoBehaviour
         {
             if (towers.ContainsKey(tilePosition))
             {
-
-                Debug.Log("Ýòî ìåñòî çàíÿòî äðóãîé ïîñòðîéêîé");
-                PlaySound(0);
+                Debug.Log("��� ����� ������ ������ ����������");
             }
             else
             {
@@ -144,17 +134,16 @@ public class TowerManager : MonoBehaviour
     {
         if (prefab != null)
         {
-            // Èíñòàíöèðóþ áàøíþ
+            // ����������� �����
             GameObject tower = Instantiate(prefab);
 
-            // Óñòàíàâëèâàþ ïîçèöèþ áàøíå
+            // ������������ ������� �����
             tower.transform.position = GetCenterTilePositionInWorld(currentTilePosition);
 
-            // Äîáàâëÿþ â ñëîâàðü
+            // �������� � �������
             towers[currentTilePosition] = tower;
-            PlayRandomBuildSound();
         }
-        else { Debug.Log("Íå óäàëîñü óñòàíîâèòü áàøíþ, òàê êàê prefab is null"); }
+        else { Debug.Log("�� ������� ���������� �����, ��� ��� prefab is null"); }
 
         HideCreatePanel();
     }
@@ -177,48 +166,4 @@ public class TowerManager : MonoBehaviour
     {
         return grassTilemap.CellToWorld(tilePosition) + grassTilemap.cellSize * 0.5f;
     }
-
-
-
-    // Ìåòîä äëÿ ïðîèãðûâàíèÿ êîíêðåòíîãî çâóêà ïî èíäåêñó â ìàññèâå
-    void PlaySound(int soundIndex)
-    {
-        // Ïðîâåðÿåì, ÷òîáû èíäåêñ íå âûõîäèë çà ïðåäåëû ìàññèâà
-        if (soundIndex >= 0 && soundIndex < soundClips.Length)
-        {
-            // Óñòàíàâëèâàåì âûáðàííûé çâóê â Audio Source
-            audioSource.clip = soundClips[soundIndex];
-
-            // Ïðîèãðûâàåì çâóê
-            audioSource.Play();
-        }
-        else
-        {
-            // Âûâîäèì ïðåäóïðåæäåíèå â êîíñîëü, åñëè èíäåêñ íåêîððåêòåí
-            Debug.LogWarning("Invalid sound index.");
-        }
-    }
-
-    void PlayRandomBuildSound()
-    {
-        // Ãåíåðèðóåì ñëó÷àéíûé èíäåêñ
-        int randomIndex = Random.Range(1, soundClips.Length);
-
-        // Óñòàíàâëèâàåì âûáðàííûé çâóê â Audio Source
-        audioSource.clip = soundClips[randomIndex];
-
-        // Ïðîèãðûâàåì çâóê
-        audioSource.Play();
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
