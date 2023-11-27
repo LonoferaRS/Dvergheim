@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour
 {
     public float cost { get; protected set; }
 
-    private void Start()
+    public virtual void Start()
     {
         MainTower mainTower = GameObject.FindGameObjectWithTag("MainTower").GetComponent<MainTower>();
 

@@ -41,6 +41,18 @@ public class MainTower : MonoBehaviour
         }
     }
 
+    public void IncreaseHealth(float health)
+    {
+        // Прибавляем полученное HP к текущему количеству
+        currentHealth += health;
+
+        // Обновляем текст, отображающий количество монет
+        coinsCountText.text = currentHealth.ToString();
+
+        // Обновляем HealthBar
+        healthBar.SetHealth(currentHealth);
+    }
+
     void GameOver()
     {
         isGameOver = true;
