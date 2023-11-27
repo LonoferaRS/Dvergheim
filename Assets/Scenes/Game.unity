@@ -961,9 +961,7 @@ MonoBehaviour:
   normalMusicTracks:
   - {fileID: 8300000, guid: f81bc27c2c1fc524f96b01e77b119aa4, type: 3}
   - {fileID: 8300000, guid: e5241066442b4394cacb38f008b85acc, type: 3}
-  bossMusicTracks:
-  - {fileID: 8300000, guid: f5fe423f71e6ea2438e2790b30283cff, type: 3}
-  - {fileID: 8300000, guid: 94b1725b18764304cb25d4162d9d616f, type: 3}
+  bossMusicTracks: []
 --- !u!1 &292084422
 GameObject:
   m_ObjectHideFlags: 0
