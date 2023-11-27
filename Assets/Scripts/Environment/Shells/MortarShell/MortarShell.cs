@@ -11,6 +11,7 @@ public class MortarShell : BaseShell
     [SerializeField] private Sprite boomSprite;
 
     private float splashRadius = 5f;
+    private float explosionDelay = 1f;
 
 
 
@@ -25,22 +26,21 @@ public class MortarShell : BaseShell
 
 
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+
+    private void Start()
     {
-        // Если столкновение с коллайдером врага
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            ExplodeShell();
-            Debug.Log("Коснулся! Снаряд должен был уничтожиться");
-        }
+        StartCoroutine(ExplodeShell());
     }
 
 
 
 
 
-    private void ExplodeShell()
+    private IEnumerator ExplodeShell()
     {
+        // Взрываем снаряд через время, равное explosionDelay
+        yield return new WaitForSeconds(explosionDelay);
+
         // Останавливаем снаряд
         shellRigidbody.velocity = Vector2.zero;
 
@@ -67,7 +67,7 @@ public class MortarShell : BaseShell
         }
 
         // Удаляю снаряд через пару секунд
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject);
     }
 
 

@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public float armorPoints { get; protected set; } = 0f;
     public float damage { get; protected set; }
     public float costForDeath { get; protected set; }
+    public bool invulable { get; set; }
 
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();

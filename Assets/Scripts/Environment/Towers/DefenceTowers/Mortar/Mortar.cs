@@ -28,12 +28,7 @@ public class Mortar : DefenceTower
 
     protected override void Shoot()
     {
-        base.Shoot();
-
-        MortarShell mortarShell = currentShell.GetComponent<MortarShell>();
-
-        // Устанавливаем позицию, на которой снаряд будет взорван
-        mortarShell.Invoke("ExplodeShell", 2f);
-
+        // Устанавливаю снаряд на предпологаемой позиции противника
+        GameObject currentShell = Instantiate(shellPrefab, predicatedPosition, transform.rotation);
     }
 }
