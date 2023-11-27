@@ -5,10 +5,10 @@ using UnityEngine.UIElements;
 
 public class MortarShell : BaseShell
 {
+    
     [SerializeField] private Rigidbody2D shellRigidbody;
     [SerializeField] private CircleCollider2D shellCollider;
-    [SerializeField] private SpriteRenderer shellSpriteRenderer;
-    [SerializeField] private Sprite boomSprite;
+    [SerializeField] private GameObject explosivePrefab;
 
     private float splashRadius = 5f;
     private float explosionDelay = 1f;
@@ -44,8 +44,8 @@ public class MortarShell : BaseShell
         // Останавливаем снаряд
         shellRigidbody.velocity = Vector2.zero;
 
-        // Меняю спрайт на спрайт взрыва (временная тема)
-        shellSpriteRenderer.sprite = boomSprite;
+        // Инстанцирую объект с анимацией взрыва
+        Instantiate(explosivePrefab, transform.position, transform.rotation);
 
         // Находим все объекты в радиусе взрыва с тегом "Enemy"
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, splashRadius);
