@@ -10,6 +10,8 @@ public class StrongGoblin : Goblin
     {
         healthPoints = 200f;
         armorPoints = 0f;
+        damage = 100f;
+        costForDeath = 30f;
     }
 
 }

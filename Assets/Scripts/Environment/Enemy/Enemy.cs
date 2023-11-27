@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     protected float startArmor;
     public float healthPoints { get; protected set; } = 100f;
     public float armorPoints { get; protected set; } = 0f;
+    public float damage { get; protected set; }
+    public float costForDeath { get; protected set; }
 
     private Transform targetWaypoint;
     private List<Transform> visitedWaypoints = new List<Transform>();
@@ -17,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     public AudioClip deathSound; // Звук смерти гоблина
     private AudioSource audioSource;
+
+    private MainTower mainTower;
 
     void Start()
     {
@@ -30,6 +34,9 @@ public class Enemy : MonoBehaviour
 
         // Запоминаем начальное количество брони
         startArmor = armorPoints;
+
+        // Получаем MainTower
+        mainTower = GameObject.FindGameObjectWithTag("MainTower").GetComponent<MainTower>();
     }
 
     void Update()
@@ -130,7 +137,10 @@ public class Enemy : MonoBehaviour
             audioSource.clip = deathSound;
             audioSource.Play();
         }
-        // Дополнительные действия при смерти гоблина
+
+        // Получаем награду за смерть Enemy в виде HP
+        mainTower.IncreaseHealth(costForDeath);
+
         Destroy(gameObject);
     }
 
@@ -159,5 +169,25 @@ public class Enemy : MonoBehaviour
     {
         float healthAfterDamage = healthPoints - damage;
         healthPoints = healthAfterDamage > 0 ? healthAfterDamage : 0;
+    }
+
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("MainTower"))
+        {
+            MainTower mainTower = collision.gameObject.GetComponent<MainTower>();
+
+
+            if (mainTower != null)
+            {
+                mainTower.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+            else { Debug.Log("Невозможно нанести урон башне, так как MainTower is null"); Destroy(gameObject); }
+        }
     }
 }
