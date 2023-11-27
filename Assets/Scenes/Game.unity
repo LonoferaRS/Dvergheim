@@ -497,6 +497,11 @@ MonoBehaviour:
   moveSpeed: 5
   zoomSpeed: 5
   multiplier: 0.2
+  borders:
+  - -34
+  - 19
+  - 21
+  - -27
 --- !u!114 &289421685
 MonoBehaviour:
   m_ObjectHideFlags: 0
