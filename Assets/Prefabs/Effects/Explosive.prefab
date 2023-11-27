@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3581274568711022072
+--- !u!1 &3001352288968970268
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,61 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5684649557884333581}
-  - component: {fileID: -6179941426228345858}
-  - component: {fileID: -5379736259052166730}
-  - component: {fileID: 1065191306162607778}
+  - component: {fileID: 4012266708740001429}
+  - component: {fileID: 2924379159431882545}
+  - component: {fileID: 7637185676642541788}
+  - component: {fileID: 2225945012287730021}
   m_Layer: 0
-  m_Name: MortarShell
+  m_Name: Explosive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5684649557884333581
+--- !u!4 &4012266708740001429
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3581274568711022072}
+  m_GameObject: {fileID: 3001352288968970268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.735857, y: -1.7828922, z: 0.832375}
+  m_LocalPosition: {x: -1.2216067, y: 0.049431458, z: -51.7544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &-6179941426228345858
+--- !u!95 &2924379159431882545
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001352288968970268}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 30d222f285e1d20408319b401e42ac24, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &7637185676642541788
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3581274568711022072}
+  m_GameObject: {fileID: 3001352288968970268}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,56 +97,27 @@ SpriteRenderer:
   m_SortingLayerID: -1844185097
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7280690282104430222, guid: 0a5eb6f75c63f5f4aac416f689ad7773, type: 3}
+  m_Sprite: {fileID: -855298285791758126, guid: 96c124316308271459b51f310a5e4e4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.3125, y: 0.3125}
+  m_Size: {x: 1.125, y: 1.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-5379736259052166730
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3581274568711022072}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1065191306162607778
+--- !u!114 &2225945012287730021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3581274568711022072}
+  m_GameObject: {fileID: 3001352288968970268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d8406551d75444183e4f84cc9cbe9c, type: 3}
+  m_Script: {fileID: 11500000, guid: f09dcc0bcc1169c418501f1d19dab2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shellRigidbody: {fileID: -5379736259052166730}
-  shellCollider: {fileID: 0}
-  explosivePrefab: {fileID: 3001352288968970268, guid: 35c277113bdef5241aba2dea4d58e080, type: 3}
+  animator: {fileID: 2924379159431882545}
