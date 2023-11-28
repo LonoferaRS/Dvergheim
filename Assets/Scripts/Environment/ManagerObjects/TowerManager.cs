@@ -13,6 +13,7 @@ public class TowerManager : MonoBehaviour
     private List<GameObject> panels = new List<GameObject>();
 
     private Tilemap grassTilemap;
+    public Tilemap roadsTilemap;
 
     private Vector3Int currentTilePosition;
     [SerializeField] private GameObject createPanel;
@@ -25,11 +26,17 @@ public class TowerManager : MonoBehaviour
 
     public bool isAnyPanelIsActive { get; set; } = false;
 
-
+    //
+    public AudioClip[] soundClips;
+    private AudioSource audioSource;
+    //
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+
         if (instance == null)
         {
             instance = this;
@@ -62,9 +69,22 @@ public class TowerManager : MonoBehaviour
             isAnyPanelIsActive = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && !isAnyPanelIsActive)
-        { 
+        {
             exitPanel.SetActive(true);
             isAnyPanelIsActive = true;
+        }
+
+        if (Input.GetMouseButtonDown(0) && !isAnyPanelIsActive)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int cellPosition = roadsTilemap.WorldToCell(mousePos);
+            TileBase clickedTile = roadsTilemap.GetTile(cellPosition);
+            // Проверка, что тайл существует и что он принадлежит Tilemap с дорогами
+            if (clickedTile != null && clickedTile == roadsTilemap.GetTile(cellPosition))
+            {
+                // Проигрывание звука
+                PlaySound(0);
+            }
         }
     }
 
@@ -76,7 +96,7 @@ public class TowerManager : MonoBehaviour
     {
         GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
-        foreach (GameObject obj in allObjects) 
+        foreach (GameObject obj in allObjects)
         {
             if (obj.GetComponent<TileDetection>() != null)
             {
@@ -96,6 +116,7 @@ public class TowerManager : MonoBehaviour
         {
             if (towers.ContainsKey(tilePosition))
             {
+                PlaySound(0);
                 Debug.Log("Это место занято другой постройкой");
             }
             else
@@ -142,6 +163,8 @@ public class TowerManager : MonoBehaviour
 
             // Добавляю в словарь
             towers[currentTilePosition] = tower;
+
+            PlayRandomBuildSound();
         }
         else { Debug.Log("Не удалось установить башню, так как prefab is null"); }
 
@@ -165,5 +188,25 @@ public class TowerManager : MonoBehaviour
     private Vector3 GetCenterTilePositionInWorld(Vector3Int tilePosition)
     {
         return grassTilemap.CellToWorld(tilePosition) + grassTilemap.cellSize * 0.5f;
+    }
+
+    void PlaySound(int soundIndex)
+    {
+        if (soundIndex >= 0 && soundIndex < soundClips.Length)
+        {
+            audioSource.clip = soundClips[soundIndex];
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Invalid sound index.");
+        }
+    }
+
+    void PlayRandomBuildSound()
+    {
+        int randomIndex = Random.Range(1, soundClips.Length);
+        audioSource.clip = soundClips[randomIndex];
+        audioSource.Play();
     }
 }

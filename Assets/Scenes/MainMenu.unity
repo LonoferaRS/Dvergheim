@@ -523,15 +523,15 @@ RectTransform:
   m_GameObject: {fileID: 844645877}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05000001, y: 0.05000001, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1179754536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 349, y: -272.65997}
-  m_SizeDelta: {x: 2540, y: 3179.6577}
+  m_AnchoredPosition: {x: 362, y: -371}
+  m_SizeDelta: {x: 10, y: 27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &844645880
 MonoBehaviour:
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1c73e102161d0694f850373f204be1ff, type: 3}
+  m_Sprite: {fileID: -4658569657523856873, guid: 452ea606815a2d44b9dbaa909903f5ba, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -640,8 +640,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 985201199}
-  playSprite: {fileID: 21300000, guid: 1c73e102161d0694f850373f204be1ff, type: 3}
-  pauseSprite: {fileID: 21300000, guid: f932fe55cae71a64f800ced1ca571373, type: 3}
+  playSprite: {fileID: -4658569657523856873, guid: 452ea606815a2d44b9dbaa909903f5ba, type: 3}
+  pauseSprite: {fileID: 8196134069491918395, guid: ef9f84e4e41752748ac02328ce8cbf82, type: 3}
 --- !u!1 &889775222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,7 +1240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 510, y: -80.34}
+  m_AnchoredPosition: {x: 510, y: -3}
   m_SizeDelta: {x: 490.96, y: 644.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1179754537
