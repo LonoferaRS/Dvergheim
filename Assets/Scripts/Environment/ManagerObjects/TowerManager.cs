@@ -17,7 +17,11 @@ public class TowerManager : MonoBehaviour
 
     private Vector3Int currentTilePosition;
     [SerializeField] private GameObject createPanel;
+
     [SerializeField] private GameObject exitPanel;
+    [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private GameObject GameFinishedPanel;
+
     [SerializeField] private GameObject ballistaPrefab;
     [SerializeField] private GameObject cannonPrefab;
     [SerializeField] private GameObject mortarPrefab;
@@ -85,6 +89,21 @@ public class TowerManager : MonoBehaviour
                 // Проигрывание звука
                 PlaySound(0);
             }
+        }
+
+
+        // Проигрыш
+
+        if (MainTower.IsGameOver)
+        {
+
+        }
+
+        // Победа
+
+        if (ObjectSpawner.IsGameFinished)
+        {
+
         }
     }
 

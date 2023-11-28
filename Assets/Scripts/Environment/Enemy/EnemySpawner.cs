@@ -13,8 +13,7 @@ public class ObjectSpawner : MonoBehaviour
     public int maxWaves = 10; // Максимальное количество волн
     private int currentWaveSize; // Текущее количество врагов в волне
     private int currentWaveNumber; // Текущий номер волны
-    private bool isGameFinished = false; // Флаг, указывающий, завершена ли игра
-
+    public static bool IsGameFinished = false; // Флаг, указывающий, завершена ли игра
 
     public AudioClip waveStartSound;
     private AudioSource audioSource;
@@ -74,7 +73,7 @@ public class ObjectSpawner : MonoBehaviour
         else
         {
             // Игра завершена
-            isGameFinished = true;
+            IsGameFinished = true;
         }
     }
 }

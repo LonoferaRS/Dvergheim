@@ -14,7 +14,7 @@ public class MainTower : MonoBehaviour
 
     public HealthBar healthBar;
 
-    private bool isGameOver = false;
+    public static bool IsGameOver = false;
 
     void Start()
     {
@@ -55,9 +55,7 @@ public class MainTower : MonoBehaviour
 
     void GameOver()
     {
-        isGameOver = true;
-        // Останавливаем игру 
-        Time.timeScale = 0f;
+        IsGameOver = true;
     }
 
 
