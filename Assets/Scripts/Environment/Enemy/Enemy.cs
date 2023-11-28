@@ -23,6 +23,10 @@ public class Enemy : MonoBehaviour
     private bool isAlive = true;
     public GameObject deathEffectPrefab;
 
+    private bool wasTurned = false;
+
+    private Sprite enemySprite;
+
     void Start()
     {
 
@@ -37,6 +41,9 @@ public class Enemy : MonoBehaviour
 
         // Получаем MainTower
         mainTower = GameObject.FindGameObjectWithTag("MainTower").GetComponent<MainTower>();
+
+        // Получаем спрайт врага
+        enemySprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     void Update()
@@ -46,6 +53,21 @@ public class Enemy : MonoBehaviour
             // Перемещение к текущей путевой точке
             MoveToWaypoint();
         }
+    }
+
+
+    // Метод который поворачивает спрайт врага на вектор движения
+    private void TrunSprite(Vector2 turnDirection)
+    {
+        turnDirection *= -1;
+
+        // Получаем угол наведения при помощи LookRotation
+        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, turnDirection);
+
+        // Поворачиваем врага
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1000f);
+
+        transform.rotation = lookRotation;
     }
 
     void MoveToWaypoint()
@@ -65,11 +87,19 @@ public class Enemy : MonoBehaviour
         // Применяем вектор движения к точке
         transform.position = movementVector;
 
+        if (!wasTurned)
+        {
+            TrunSprite(velocity);
+            wasTurned = true;
+        }
+
         // Если достигнута текущая путевая точка, добавить ее в список посещенных и найти следующую
         if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.1f)
         {
             visitedWaypoints.Add(targetWaypoint);
             FindNearestWaypoint();
+            
+            wasTurned = false;
         }
     }
 
