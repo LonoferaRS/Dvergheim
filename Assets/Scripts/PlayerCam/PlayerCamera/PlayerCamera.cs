@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -11,14 +12,28 @@ public class PlayerCamera : MonoBehaviour
 
     private Camera mainCamera;
     private float currentMoveSpeed;
+    
+    [SerializeField] private Tilemap tilemap;
+    private Collider2D tilemapCollider;
+
+    private float minOrthographicSize = 1f;
+    private float maxOrthographicSize = 10f;
+
+
+
+
+
+
 
     private void Start()
     {
         mainCamera = GetComponent<Camera>();
         currentMoveSpeed = baseMoveSpeed;
-    }
 
-    private void Update()
+        tilemapCollider = tilemap.GetComponent<TilemapCollider2D>();
+    }
+    
+    private void LateUpdate()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
@@ -37,12 +52,45 @@ public class PlayerCamera : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 moveDirection = new Vector3(horizontalInput, verticalInput, 0f) * currentMoveSpeed * Time.deltaTime;
-        transform.position += moveDirection;
 
-        // Изменение масштаба камеры
+        // Определяем новую позицию камеры с учетом границы
+        Vector3 newPosition = transform.position + moveDirection;
+
+        if (tilemapCollider != null)
+        {
+            // Определяем ограничивающий прямоугольник коллайдера
+            Bounds tilemapBounds = tilemapCollider.bounds;
+
+            // Ограничиваем новую позицию по области коллайдера
+            newPosition.x = Mathf.Clamp(newPosition.x, tilemapBounds.min.x + mainCamera.orthographicSize * mainCamera.aspect, tilemapBounds.max.x - mainCamera.orthographicSize * mainCamera.aspect);
+            newPosition.y = Mathf.Clamp(newPosition.y, tilemapBounds.min.y + mainCamera.orthographicSize, tilemapBounds.max.y - mainCamera.orthographicSize);
+        }
+
+        transform.position = newPosition;
+
+
+
+        // Ограничение изменения размера камеры
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        float newOrthographicSize = mainCamera.orthographicSize - scrollInput * zoomSpeed;
 
-        mainCamera.orthographicSize -= scrollInput * zoomSpeed;
-        mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 1f, Mathf.Infinity);
+        // Ограничиваем изменение размера камеры по границам карты
+        newOrthographicSize = Mathf.Clamp(newOrthographicSize, minOrthographicSize, maxOrthographicSize);
+
+        mainCamera.orthographicSize = newOrthographicSize;
+
+        // Теперь учитываем границы и меняем размер камеры только если не выходим за их пределы
+        if (mainCamera.orthographicSize <= maxOrthographicSize && mainCamera.orthographicSize >= minOrthographicSize)
+        {
+            // Определяем ограничивающий прямоугольник коллайдера
+            Bounds tilemapBounds = tilemapCollider.bounds;
+
+            // Проверяем, чтобы новая ширина не выходила за границы карты
+            float newWidth = mainCamera.aspect * mainCamera.orthographicSize * 2;
+            newWidth = Mathf.Clamp(newWidth, tilemapBounds.min.x * 2, tilemapBounds.max.x * 2);
+
+            // Устанавливаем новый размер камеры
+            mainCamera.orthographicSize = newWidth / (2 * mainCamera.aspect);
+        }
     }
 }
