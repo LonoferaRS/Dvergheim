@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8013062587605756510}
   - component: {fileID: 256161486062331880}
-  - component: {fileID: 7130829912206605916}
   - component: {fileID: 5565589387594617511}
   - component: {fileID: 2385701595040285588}
   - component: {fileID: 6553787627279981836}
@@ -90,24 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7130829912206605916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536425721223319549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4fe0778c98a54d9a9d590c98ea5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinSounds:
-  - {fileID: 8300000, guid: 404a254d74f1db340b0936aeb9fede29, type: 3}
-  - {fileID: 8300000, guid: bff851591d948494695f9e0cc6dbae6c, type: 3}
-  - {fileID: 8300000, guid: 01c97a9a3c6dd224aad3e3fde3df90e2, type: 3}
-  minTimeBetweenSounds: 3
-  maxTimeBetweenSounds: 5
 --- !u!58 &5565589387594617511
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -116,7 +97,6 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6536425721223319549}
   m_Enabled: 1
-  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -140,9 +120,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
   m_Radius: 0.1875
 --- !u!50 &2385701595040285588
 Rigidbody2D:
@@ -279,9 +259,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d538344d049434186854bf30baf865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  deathEffectPrefab: {fileID: 1272173338048324461, guid: 3fe7667bd3581f948a3592a8d4ccfb01, type: 3}
   healthBarSlider: {fileID: 5095568128008307405}
   armorBarSlider: {fileID: 4643757427147843660}
+  ArmorLosingPrefab: {fileID: 2667942159112668709, guid: 822ac2ab9a8181c4a82c8d2bb5a8bc95, type: 3}
+  toGoblinSprite: {fileID: -1836630554280055203, guid: cc79356674685804b845757ca2f409d3, type: 3}
 --- !u!1001 &5376634724794010801
 PrefabInstance:
   m_ObjectHideFlags: 0

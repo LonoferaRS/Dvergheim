@@ -7,7 +7,9 @@ public class ArmoredGoblin : Enemy
 {
     [SerializeField] private Slider healthBarSlider;
     [SerializeField] private Slider armorBarSlider;
-
+    [SerializeField] private GameObject ArmorLosingPrefab;
+    [SerializeField] private Sprite toGoblinSprite;
+    private bool hasArmor = true;
 
     private void Awake()
     {
@@ -16,7 +18,6 @@ public class ArmoredGoblin : Enemy
         damage = 50f;
         costForDeath = 35f;
     }
-
 
     public override void TakeDamage(float damage, float armorDecreaseConst)
     {
@@ -29,5 +30,29 @@ public class ArmoredGoblin : Enemy
         // Меняем количество брони в ArmorBar
         float currentArmorPetcent = 100 * armorPoints / startArmor;
         armorBarSlider.value = currentArmorPetcent / 100;
+
+        if (armorPoints == 0 && hasArmor == true)
+        {
+            LosingArmor();
+        }
+    }
+
+    private void LosingArmor()
+    {
+        // Получаем компонент SpriteRenderer текущего объекта
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        // Проверяем, что компонент SpriteRenderer существует
+        if (spriteRenderer != null)
+        {
+            // Устанавливаем новый спрайт
+            spriteRenderer.sprite = toGoblinSprite;
+        }
+        else
+        {
+            // Если компонент SpriteRenderer отсутствует, выводим сообщение об ошибке в консоль
+            Debug.LogError("SpriteRenderer component not found on the object.");
+        }
+        GameObject ArmorLosingObject = Instantiate(ArmorLosingPrefab, transform.position, Quaternion.identity);
+        hasArmor = false;
     }
 }

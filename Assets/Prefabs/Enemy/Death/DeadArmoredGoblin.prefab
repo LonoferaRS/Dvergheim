@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 437177271847945053}
   - component: {fileID: 4509962442419849189}
   m_Layer: 0
-  m_Name: DeadGoblin
+  m_Name: DeadArmoredGoblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
