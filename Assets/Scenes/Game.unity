@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -594,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4754fbd4f416c4f9088928323f24dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainTower: {fileID: 0}
   goblinPrefab: {fileID: 8642772133260691458, guid: 5438bc9b3cb028244a8af9a3b5c55093, type: 3}
   armoredGoblinPrefab: {fileID: 6536425721223319549, guid: dc71c681b9e6115409b0e82c71241e6d, type: 3}
   strongGoblinPrefab: {fileID: 1534011856724551892, guid: 6f443771097b97342aab7b9c65b68334, type: 3}
@@ -1913,6 +1911,7 @@ TilemapCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689431147}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1936,7 +1935,8 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -4253,7 +4253,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 567429999
+  m_SortingLayerID: 1644492237
   m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1042640650
@@ -30311,6 +30311,7 @@ TilemapCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917705706}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -30334,7 +30335,8 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0

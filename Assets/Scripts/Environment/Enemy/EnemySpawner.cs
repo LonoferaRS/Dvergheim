@@ -3,6 +3,9 @@ using System.Collections;
 
 public class ObjectSpawner : MonoBehaviour
 {
+    [SerializeField] private MainTower mainTower;
+    private string gameOverText = "Вы победили!";
+
     public GameObject goblinPrefab;
     public GameObject armoredGoblinPrefab;
     public GameObject strongGoblinPrefab;
@@ -141,6 +144,8 @@ public class ObjectSpawner : MonoBehaviour
         {
             // Игра завершена
             IsGameFinished = true;
+            mainTower.GameOver(gameOverText);
+
         }
     }
 

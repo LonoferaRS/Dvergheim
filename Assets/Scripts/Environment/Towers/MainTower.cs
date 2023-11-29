@@ -57,7 +57,7 @@ public class MainTower : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
-    void GameOver(string gameOverText)
+    public void GameOver(string gameOverText)
     {
         IsGameOver = true;
         TowerManager.instance.isAnyPanelIsActive = true;
