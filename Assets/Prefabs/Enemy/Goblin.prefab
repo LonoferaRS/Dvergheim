@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2835295710385723987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8199534751482176366}
+  m_Layer: 0
+  m_Name: StatsBarHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8199534751482176366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835295710385723987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1586499093801253603}
+  m_Father: {fileID: 4443723937887908170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8642772133260691458
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,7 +66,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1586499093801253603}
+  - {fileID: 8199534751482176366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &967674028263944547
@@ -97,6 +129,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8642772133260691458}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -120,9 +153,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
   m_Radius: 0.1875
 --- !u!50 &4937819483786073729
 Rigidbody2D:
@@ -259,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d705714dca7f544b8d6487fa3af516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsBarHolder: {fileID: 2835295710385723987}
   deathEffectPrefab: {fileID: 1272173338048324461, guid: cade21e618d5fa148b3329c56dcd9956, type: 3}
   healthBarSlider: {fileID: 8552680648183104510}
 --- !u!1001 &3752970766116192694
@@ -267,7 +301,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4443723937887908170}
+    m_TransformParent: {fileID: 8199534751482176366}
     m_Modifications:
     - target: {fileID: 856848940875724068, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -295,15 +329,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

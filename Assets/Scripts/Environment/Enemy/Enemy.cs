@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private List<Transform> visitedWaypoints = new List<Transform>();
     public Vector2 velocity { get; private set; }
     [SerializeField] public float moveSpeed { get; protected set; } = 3f;
+    [SerializeField] private GameObject statsBarHolder;
 
     private MainTower mainTower;
 
@@ -60,13 +61,18 @@ public class Enemy : MonoBehaviour
     private void TrunSprite(Vector2 turnDirection)
     {
 
+
         // Получаем угол наведения при помощи LookRotation
         Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, turnDirection);
 
-        // Поворачиваем врага
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1000f);
+        // Получаю угол для StatsBarHolder
+        Quaternion statsHolderRotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0,1,0));
 
+        // Поворачиваем врага
         transform.rotation = lookRotation;
+
+        // Поворачиваем StatsHolder в обратную сторону, чтобы StatsBar не крутился вместе с врагом
+        statsBarHolder.transform.rotation = statsHolderRotation;
     }
 
     void MoveToWaypoint()
@@ -145,17 +151,15 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage, float armorDecreaseConst)
     {
 
-        if (healthPoints > 0)
+        if (armorPoints > 0)
         {
-            if (armorPoints > 0)
-            {
-                TakeDamageOnArmor(damage, armorDecreaseConst);
-            }
-            else
-            {
-                TakeDamageOnHealth(damage);
-            }
+            TakeDamageOnArmor(damage, armorDecreaseConst);
         }
+        else
+        {
+            TakeDamageOnHealth(damage);
+        }
+
         
         if (healthPoints == 0)
         {
