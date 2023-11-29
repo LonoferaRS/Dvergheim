@@ -144,15 +144,19 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(float damage, float armorDecreaseConst)
     {
-        if (armorPoints > 0)
-        {
-            TakeDamageOnArmor(damage, armorDecreaseConst);
-        }
-        else
-        {
-            TakeDamageOnHealth(damage);
-        }
 
+        if (healthPoints > 0)
+        {
+            if (armorPoints > 0)
+            {
+                TakeDamageOnArmor(damage, armorDecreaseConst);
+            }
+            else
+            {
+                TakeDamageOnHealth(damage);
+            }
+        }
+        
         if (healthPoints == 0)
         {
             Die();
