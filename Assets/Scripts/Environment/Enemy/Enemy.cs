@@ -59,7 +59,6 @@ public class Enemy : MonoBehaviour
     // ћетод который поворачивает спрайт врага на вектор движени€
     private void TrunSprite(Vector2 turnDirection)
     {
-        turnDirection *= -1;
 
         // ѕолучаем угол наведени€ при помощи LookRotation
         Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, turnDirection);

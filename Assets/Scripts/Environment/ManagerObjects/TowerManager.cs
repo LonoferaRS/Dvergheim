@@ -27,6 +27,7 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private GameObject mortarPrefab;
     [SerializeField] private GameObject catapultPrefab;
     [SerializeField] private GameObject minePrefab;
+    [SerializeField] private MainTower mainTower;
 
     public bool isAnyPanelIsActive { get; set; } = false;
 
@@ -62,48 +63,40 @@ public class TowerManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isAnyPanelIsActive)
+        if (!mainTower.IsGameOver)
         {
-            foreach (GameObject panel in panels)
+            if (Input.GetKeyDown(KeyCode.Escape) && isAnyPanelIsActive)
             {
-                panel.SetActive(false);
+                foreach (GameObject panel in panels)
+                {
+                    panel.SetActive(false);
+                }
+
+                Time.timeScale = 1.0f;
+                isAnyPanelIsActive = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && !isAnyPanelIsActive)
+            {
+                exitPanel.SetActive(true);
+                isAnyPanelIsActive = true;
             }
 
-            Time.timeScale = 1.0f;
-            isAnyPanelIsActive = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !isAnyPanelIsActive)
-        {
-            exitPanel.SetActive(true);
-            isAnyPanelIsActive = true;
-        }
-
-        if (Input.GetMouseButtonDown(0) && !isAnyPanelIsActive)
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPosition = roadsTilemap.WorldToCell(mousePos);
-            TileBase clickedTile = roadsTilemap.GetTile(cellPosition);
-            // Проверка, что тайл существует и что он принадлежит Tilemap с дорогами
-            if (clickedTile != null && clickedTile == roadsTilemap.GetTile(cellPosition))
+            if (Input.GetMouseButtonDown(0) && !isAnyPanelIsActive)
             {
-                // Проигрывание звука
-                PlaySound(0);
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int cellPosition = roadsTilemap.WorldToCell(mousePos);
+                TileBase clickedTile = roadsTilemap.GetTile(cellPosition);
+                // Проверка, что тайл существует и что он принадлежит Tilemap с дорогами
+                if (clickedTile != null && clickedTile == roadsTilemap.GetTile(cellPosition))
+                {
+                    // Проигрывание звука
+                    PlaySound(0);
+                }
             }
         }
-
-
-        // Проигрыш
-
-        if (MainTower.IsGameOver)
+        else
         {
-
-        }
-
-        // Победа
-
-        if (ObjectSpawner.IsGameFinished)
-        {
-
+            Debug.Log("Игра считается завершенной");
         }
     }
 
