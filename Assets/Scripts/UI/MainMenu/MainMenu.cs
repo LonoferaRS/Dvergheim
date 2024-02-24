@@ -20,6 +20,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void PlayButtonSound()
     {
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SfxVolume");
         GetComponent<AudioSource>().Play();
     }
     IEnumerator Load(int x) 
