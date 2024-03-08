@@ -4,7 +4,7 @@ using System.Collections;
 public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private MainTower mainTower;
-    private string gameOverText = "Вы победили!";
+    private string gameOverText = "You win!";
 
     public GameObject goblinPrefab;
     public GameObject armoredGoblinPrefab;
