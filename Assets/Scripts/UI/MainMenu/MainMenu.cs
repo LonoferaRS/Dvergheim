@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class NewBehaviourScript : MonoBehaviour
 {
     public float ButtonDelay = 0.2f;
+    public float ExitDelay = 0.4f;
     public void PlayLevel1()
     {
         StartCoroutine(Load(1));
@@ -37,7 +38,7 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator Quit()
     {
         PlayButtonSound();
-        yield return new WaitForSeconds(ButtonDelay);
+        yield return new WaitForSeconds(ExitDelay);
         Application.Quit();
     }
 }
