@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class RandomMusicPlayer : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class RandomMusicPlayer : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
         if (musicTracks.Length > 0)
         {
             PlayRandomMusic();
@@ -18,7 +18,10 @@ public class RandomMusicPlayer : MonoBehaviour
             Debug.LogError("No music tracks assigned!");
         }
     }
-
+    private void Update()
+    {
+        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
+    }
     void PlayRandomMusic()
     {
         int randomIndex = Random.Range(0, musicTracks.Length);
