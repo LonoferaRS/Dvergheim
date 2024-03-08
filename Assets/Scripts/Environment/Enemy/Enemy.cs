@@ -17,15 +17,19 @@ public class Enemy : MonoBehaviour
     private List<Transform> visitedWaypoints = new List<Transform>();
     public Vector2 velocity { get; private set; }
     [SerializeField] public float moveSpeed { get; protected set; } = 3f;
-
-    public AudioClip deathSound; // Звук смерти гоблина
-    private AudioSource audioSource;
+    [SerializeField] private GameObject statsBarHolder;
 
     private MainTower mainTower;
 
+    private bool isAlive = true;
+    public GameObject deathEffectPrefab;
+
+    private bool wasTurned = false;
+
+    private Sprite enemySprite;
+
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
 
         // Найти ближайшую путевую точку при старте
         FindNearestWaypoint();
@@ -38,12 +42,37 @@ public class Enemy : MonoBehaviour
 
         // Получаем MainTower
         mainTower = GameObject.FindGameObjectWithTag("MainTower").GetComponent<MainTower>();
+
+        // Получаем спрайт врага
+        enemySprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     void Update()
     {
-        // Перемещение к текущей путевой точке
-        MoveToWaypoint();
+        if (isAlive)
+        {
+            // Перемещение к текущей путевой точке
+            MoveToWaypoint();
+        }
+    }
+
+
+    // Метод который поворачивает спрайт врага на вектор движения
+    private void TrunSprite(Vector2 turnDirection)
+    {
+
+
+        // Получаем угол наведения при помощи LookRotation
+        Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, turnDirection);
+
+        // Получаю угол для StatsBarHolder
+        Quaternion statsHolderRotation = Quaternion.LookRotation(Vector3.forward, new Vector3(0,1,0));
+
+        // Поворачиваем врага
+        transform.rotation = lookRotation;
+
+        // Поворачиваем StatsHolder в обратную сторону, чтобы StatsBar не крутился вместе с врагом
+        statsBarHolder.transform.rotation = statsHolderRotation;
     }
 
     void MoveToWaypoint()
@@ -63,11 +92,19 @@ public class Enemy : MonoBehaviour
         // Применяем вектор движения к точке
         transform.position = movementVector;
 
+        if (!wasTurned)
+        {
+            TrunSprite(velocity);
+            wasTurned = true;
+        }
+
         // Если достигнута текущая путевая точка, добавить ее в список посещенных и найти следующую
         if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.1f)
         {
             visitedWaypoints.Add(targetWaypoint);
             FindNearestWaypoint();
+            
+            wasTurned = false;
         }
     }
 
@@ -113,6 +150,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(float damage, float armorDecreaseConst)
     {
+
         if (armorPoints > 0)
         {
             TakeDamageOnArmor(damage, armorDecreaseConst);
@@ -122,6 +160,7 @@ public class Enemy : MonoBehaviour
             TakeDamageOnHealth(damage);
         }
 
+        
         if (healthPoints == 0)
         {
             Die();
@@ -132,12 +171,8 @@ public class Enemy : MonoBehaviour
     // Метод для обработки смерти гоблина
     void Die()
     {
-        // Проигрываем звук смерти
-        if (deathSound != null && audioSource != null)
-        {
-            audioSource.clip = deathSound;
-            audioSource.Play();
-        }
+
+        GameObject deathEffectObject = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
         // Получаем награду за смерть Enemy в виде HP
         mainTower.IncreaseHealth(costForDeath);

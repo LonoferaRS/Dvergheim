@@ -127,5 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shellRigidbody: {fileID: -5379736259052166730}
   shellCollider: {fileID: 0}
-  shellSpriteRenderer: {fileID: -6179941426228345858}
-  boomSprite: {fileID: 863713214445913181, guid: f2826496ff20e0d4f85373465646d7a6, type: 3}
+  explosivePrefab: {fileID: 3001352288968970268, guid: 35c277113bdef5241aba2dea4d58e080, type: 3}

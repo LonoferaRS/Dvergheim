@@ -1,59 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float baseMoveSpeed = 1f;
+    public float maxMoveSpeed = 50f;
+    public float accelerationMultiplier = 0.35f;
     public float zoomSpeed = 5f;
-    public float multiplier = 0.0005f;
-    public float[] borders;
-    float coefx = 1.776f;
+
     private Camera mainCamera;
+    private float currentMoveSpeed;
+    
+    [SerializeField] private Tilemap tilemap;
+    private Collider2D tilemapCollider;
+
+    private float minOrthographicSize = 1f;
+    private float maxOrthographicSize = 10f;
+
+
+
+
+
+
+
     private void Start()
     {
         mainCamera = GetComponent<Camera>();
-    }
+        currentMoveSpeed = baseMoveSpeed;
 
-    private void Update()
+        tilemapCollider = tilemap.GetComponent<TilemapCollider2D>();
+    }
+    
+    private void LateUpdate()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
-            moveSpeed = moveSpeed + multiplier;
+            currentMoveSpeed += accelerationMultiplier;
         }
         else
         {
-            moveSpeed = 3f;
+            currentMoveSpeed = baseMoveSpeed;
         }
 
+        // Ограничение максимальной скорости движения
+        currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, baseMoveSpeed, maxMoveSpeed);
 
         // Перемещение камеры
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = new Vector3(horizontalInput, verticalInput, 0f) * moveSpeed * Time.deltaTime;
-        Vector3 newPosition = transform.position + moveDirection;
-        if (newPosition.x-mainCamera.orthographicSize*coefx < borders[0])
-        {
-            newPosition = new Vector3(borders[0]+ mainCamera.orthographicSize * coefx, newPosition.y, newPosition.z);
-        }
-        if (newPosition.x+ mainCamera.orthographicSize * coefx > borders[2])
-        {
-            newPosition = new Vector3(borders[2]- mainCamera.orthographicSize * coefx, newPosition.y, newPosition.z);
-        }
-        if (newPosition.y + mainCamera.orthographicSize > borders[1])
-        {
-            newPosition = new Vector3(newPosition.x, borders[1]- mainCamera.orthographicSize, newPosition.z);
-        }
-        if (newPosition.y - mainCamera.orthographicSize < borders[3])
-        {
-            newPosition = new Vector3(newPosition.x, borders[3] + mainCamera.orthographicSize, newPosition.z);
-        }
-        transform.position = newPosition;
-        // Изменение масштаба камеры
-        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        Vector3 moveDirection = new Vector3(horizontalInput, verticalInput, 0f) * currentMoveSpeed * Time.deltaTime;
 
-        mainCamera.orthographicSize -= scrollInput * zoomSpeed;
-        mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 1f, Mathf.Infinity);
+        // Определяем новую позицию камеры с учетом границы
+        Vector3 newPosition = transform.position + moveDirection;
+
+        if (tilemapCollider != null)
+        {
+            // Определяем ограничивающий прямоугольник коллайдера
+            Bounds tilemapBounds = tilemapCollider.bounds;
+
+            // Ограничиваем новую позицию по области коллайдера
+            newPosition.x = Mathf.Clamp(newPosition.x, tilemapBounds.min.x + mainCamera.orthographicSize * mainCamera.aspect, tilemapBounds.max.x - mainCamera.orthographicSize * mainCamera.aspect);
+            newPosition.y = Mathf.Clamp(newPosition.y, tilemapBounds.min.y + mainCamera.orthographicSize, tilemapBounds.max.y - mainCamera.orthographicSize);
+        }
+
+        transform.position = newPosition;
+
+
+
+        // Ограничение изменения размера камеры
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        float newOrthographicSize = mainCamera.orthographicSize - scrollInput * zoomSpeed;
+
+        // Ограничиваем изменение размера камеры по границам карты
+        newOrthographicSize = Mathf.Clamp(newOrthographicSize, minOrthographicSize, maxOrthographicSize);
+
+        mainCamera.orthographicSize = newOrthographicSize;
+
+        // Теперь учитываем границы и меняем размер камеры только если не выходим за их пределы
+        if (mainCamera.orthographicSize <= maxOrthographicSize && mainCamera.orthographicSize >= minOrthographicSize)
+        {
+            // Определяем ограничивающий прямоугольник коллайдера
+            Bounds tilemapBounds = tilemapCollider.bounds;
+
+            // Проверяем, чтобы новая ширина не выходила за границы карты
+            float newWidth = mainCamera.aspect * mainCamera.orthographicSize * 2;
+            newWidth = Mathf.Clamp(newWidth, tilemapBounds.min.x * 2, tilemapBounds.max.x * 2);
+
+            // Устанавливаем новый размер камеры
+            mainCamera.orthographicSize = newWidth / (2 * mainCamera.aspect);
+        }
     }
 }

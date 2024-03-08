@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2835295710385723987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8199534751482176366}
+  m_Layer: 0
+  m_Name: StatsBarHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8199534751482176366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835295710385723987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1586499093801253603}
+  m_Father: {fileID: 4443723937887908170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8642772133260691458
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4443723937887908170}
   - component: {fileID: 967674028263944547}
-  - component: {fileID: 66071470888580979}
   - component: {fileID: 7098899481231311076}
   - component: {fileID: 4937819483786073729}
   - component: {fileID: 2977545043803632343}
@@ -35,7 +66,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1586499093801253603}
+  - {fileID: 8199534751482176366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &967674028263944547
@@ -79,7 +110,7 @@ SpriteRenderer:
   m_SortingLayerID: -1844185097
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1836630554280055203, guid: cc79356674685804b845757ca2f409d3, type: 3}
+  m_Sprite: {fileID: -6978138325492743441, guid: c6b576027e72f5d499bdbe91db3a4b2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90,24 +121,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &66071470888580979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8642772133260691458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4fe0778c98a54d9a9d590c98ea5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinSounds:
-  - {fileID: 8300000, guid: 404a254d74f1db340b0936aeb9fede29, type: 3}
-  - {fileID: 8300000, guid: bff851591d948494695f9e0cc6dbae6c, type: 3}
-  - {fileID: 8300000, guid: 01c97a9a3c6dd224aad3e3fde3df90e2, type: 3}
-  minTimeBetweenSounds: 3
-  maxTimeBetweenSounds: 5
 --- !u!58 &7098899481231311076
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -279,7 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d705714dca7f544b8d6487fa3af516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  statsBarHolder: {fileID: 2835295710385723987}
+  deathEffectPrefab: {fileID: 1272173338048324461, guid: cade21e618d5fa148b3329c56dcd9956, type: 3}
   healthBarSlider: {fileID: 8552680648183104510}
 --- !u!1001 &3752970766116192694
 PrefabInstance:
@@ -287,7 +301,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4443723937887908170}
+    m_TransformParent: {fileID: 8199534751482176366}
     m_Modifications:
     - target: {fileID: 856848940875724068, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -315,15 +329,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

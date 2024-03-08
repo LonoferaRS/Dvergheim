@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5202260369324595975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4211796884294438012}
+  m_Layer: 0
+  m_Name: StatsBarHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4211796884294438012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5202260369324595975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8098502555323570276}
+  m_Father: {fileID: 8013062587605756510}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6536425721223319549
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8013062587605756510}
   - component: {fileID: 256161486062331880}
-  - component: {fileID: 7130829912206605916}
   - component: {fileID: 5565589387594617511}
   - component: {fileID: 2385701595040285588}
   - component: {fileID: 6553787627279981836}
@@ -35,7 +66,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8098502555323570276}
+  - {fileID: 4211796884294438012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &256161486062331880
@@ -90,24 +121,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7130829912206605916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6536425721223319549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4fe0778c98a54d9a9d590c98ea5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinSounds:
-  - {fileID: 8300000, guid: 404a254d74f1db340b0936aeb9fede29, type: 3}
-  - {fileID: 8300000, guid: bff851591d948494695f9e0cc6dbae6c, type: 3}
-  - {fileID: 8300000, guid: 01c97a9a3c6dd224aad3e3fde3df90e2, type: 3}
-  minTimeBetweenSounds: 3
-  maxTimeBetweenSounds: 5
 --- !u!58 &5565589387594617511
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -279,16 +292,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d538344d049434186854bf30baf865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  statsBarHolder: {fileID: 5202260369324595975}
+  deathEffectPrefab: {fileID: 1272173338048324461, guid: 3fe7667bd3581f948a3592a8d4ccfb01, type: 3}
   healthBarSlider: {fileID: 5095568128008307405}
   armorBarSlider: {fileID: 4643757427147843660}
+  ArmorLosingPrefab: {fileID: 2667942159112668709, guid: 822ac2ab9a8181c4a82c8d2bb5a8bc95, type: 3}
+  toGoblinSprite: {fileID: -1836630554280055203, guid: cc79356674685804b845757ca2f409d3, type: 3}
 --- !u!1001 &5376634724794010801
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8013062587605756510}
+    m_TransformParent: {fileID: 4211796884294438012}
     m_Modifications:
     - target: {fileID: 1106259774239971773, guid: 16644a02d335fb4408fcefaadf380243, type: 3}
       propertyPath: m_AnchorMax.x
@@ -324,15 +340,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250850359322809557, guid: 16644a02d335fb4408fcefaadf380243, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4250850359322809557, guid: 16644a02d335fb4408fcefaadf380243, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4250850359322809557, guid: 16644a02d335fb4408fcefaadf380243, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4250850359322809557, guid: 16644a02d335fb4408fcefaadf380243, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

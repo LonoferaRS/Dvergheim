@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1970462762423751920}
   - component: {fileID: 2290563250897872705}
-  - component: {fileID: 5854574991856823980}
   - component: {fileID: 9088295452043940581}
   - component: {fileID: 9003936790196260466}
   - component: {fileID: 4108028805478706193}
@@ -35,7 +34,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 464757953116065868}
+  - {fileID: 273600050928981995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2290563250897872705
@@ -90,24 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5854574991856823980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534011856724551892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4fe0778c98a54d9a9d590c98ea5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinSounds:
-  - {fileID: 8300000, guid: 404a254d74f1db340b0936aeb9fede29, type: 3}
-  - {fileID: 8300000, guid: bff851591d948494695f9e0cc6dbae6c, type: 3}
-  - {fileID: 8300000, guid: 01c97a9a3c6dd224aad3e3fde3df90e2, type: 3}
-  minTimeBetweenSounds: 3
-  maxTimeBetweenSounds: 5
 --- !u!58 &9088295452043940581
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -279,15 +260,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd52f6100ecf567479639fffaaadbf49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: {fileID: 8300000, guid: 93363047540f98247ac10c671321fe7f, type: 3}
+  statsBarHolder: {fileID: 7790613742010839227}
+  deathEffectPrefab: {fileID: 1272173338048324461, guid: e8653bc4cdf17fa4aaa2af9341aa1634, type: 3}
   healthBarSlider: {fileID: 0}
+--- !u!1 &7790613742010839227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 273600050928981995}
+  m_Layer: 0
+  m_Name: StatsBarHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &273600050928981995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790613742010839227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 464757953116065868}
+  m_Father: {fileID: 1970462762423751920}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2621795816067427097
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1970462762423751920}
+    m_TransformParent: {fileID: 273600050928981995}
     m_Modifications:
     - target: {fileID: 856848940875724068, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -315,15 +329,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2454843886808906581, guid: 0ab07f6702bad5d42a97434b78ea8a2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

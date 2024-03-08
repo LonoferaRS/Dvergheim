@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StrongGoblin : Goblin
 {
-    
+
     private void Awake()
     {
         healthPoints = 200f;
@@ -13,5 +13,4 @@ public class StrongGoblin : Goblin
         damage = 100f;
         costForDeath = 30f;
     }
-
 }

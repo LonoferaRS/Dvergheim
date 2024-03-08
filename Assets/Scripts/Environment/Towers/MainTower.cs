@@ -7,6 +7,10 @@ using TMPro;
 public class MainTower : MonoBehaviour
 {
     [SerializeField] private GameObject coinsCountObject;
+    [SerializeField] private GameObject gameOverWindow;
+    [SerializeField] private TextMeshProUGUI gameOverTextholder;
+    private string gameOverText = "Вы проиграли!";
+
     private TextMeshProUGUI coinsCountText;
 
     public float maxHealth = 1000;
@@ -14,7 +18,7 @@ public class MainTower : MonoBehaviour
 
     public HealthBar healthBar;
 
-    private bool isGameOver = false;
+    public bool IsGameOver { get; private set; } = false;
 
     void Start()
     {
@@ -37,7 +41,7 @@ public class MainTower : MonoBehaviour
         // Проверяем, если здоровье башни меньше или равно нулю, уничтожаем башню или выполняем другие действия
         if (currentHealth == 0)
         {
-            GameOver();   // Здесь код если хп = 0
+            GameOver(gameOverText);   // Здесь код если хп = 0
         }
     }
 
@@ -53,12 +57,18 @@ public class MainTower : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
-    void GameOver()
+    public void GameOver(string gameOverText)
     {
-        isGameOver = true;
-        // Останавливаем игру 
-        Time.timeScale = 0f;
+        IsGameOver = true;
+        TowerManager.instance.isAnyPanelIsActive = true;
+
+        // Активируем окно завершения игры и добавляем туда нужный текст
+        gameOverWindow.SetActive(true);
+        gameOverTextholder.text = gameOverText;
+
     }
+
+
 
 
 
