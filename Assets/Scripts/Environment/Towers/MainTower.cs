@@ -9,7 +9,7 @@ public class MainTower : MonoBehaviour
     [SerializeField] private GameObject coinsCountObject;
     [SerializeField] private GameObject gameOverWindow;
     [SerializeField] private TextMeshProUGUI gameOverTextholder;
-    private string gameOverText = "Вы проиграли!";
+    private string gameOverText = "You lost!";
 
     private TextMeshProUGUI coinsCountText;
 
