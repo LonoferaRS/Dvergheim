@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Effects/Explosive.prefab.meta
 guid: 35c277113bdef5241aba2dea4d58e080
 PrefabImporter:
+========
+guid: ede12879cbcba6f45b080539b8df86ca
+DefaultImporter:
+>>>>>>>> main:Assets/Scenes/Game2.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

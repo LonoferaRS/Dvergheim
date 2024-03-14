@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Enemy/Death/ArmorLosing/ArmorLosing.prefab.meta
+guid: f51b791695dba3e46aa97aa113b37a5a
+PrefabImporter:
+========
 guid: a799cb906c20a2a448700d5dfd546f4a
 DefaultImporter:
+>>>>>>>> main:Assets/Scenes/Game3.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

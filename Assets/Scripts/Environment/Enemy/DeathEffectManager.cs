@@ -30,6 +30,7 @@ public class EnemyDeathEffect : MonoBehaviour
     {
         int randomIndex = Random.Range(0, deathSound.Length);
         audioSource.clip = deathSound[randomIndex];
+        audioSource.volume = PlayerPrefs.GetInt("SfxDeath") * PlayerPrefs.GetFloat("SfxVolume");
         audioSource.Play();
     }
 
