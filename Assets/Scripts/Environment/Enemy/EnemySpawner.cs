@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System;
+using Unity.VisualScripting;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -13,7 +16,7 @@ public class ObjectSpawner : MonoBehaviour
     public Transform[] spawnPoints; // Массив точек спавна
     public float timeBeforeFirstWave = 5f; // Время до появления первой волны
     public float timeBetweenWaves = 10f; // Время между волнами
-    public float timeBeforeSpawn = 10f; // Время между спавном
+    public float timeBeforeSpawn = 0.3f; // Время между спавном
     public int maxAdditionalEnemies = 4; // Максимальное количество дополнительных врагов в следующих волнах
     public int minAdditionalEnemies = 1; // Минимальное количество дополнительных врагов в следующих волнах
     public int maxWaves = 15; // Максимальное количество волн
@@ -27,7 +30,7 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        currentWaveNumber = 0;
+
         // Ждем перед появлением первой волны
         StartCoroutine(DelayedStart());
     }
@@ -36,281 +39,123 @@ public class ObjectSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeFirstWave);
 
+        // Задаю общее количество гоблинов
+        int goblinsCount = 100;
+        int armoredGoblinsCount = 50;
+        int strongGoblinsCount = 80;
+        int juggernautsCount = 5;
+
+        // Задаю параметры влияющие на волны гоблинов
+        int waveCount = 8;
+        double waveIncPercent = 1.4;
+        double complexityParam = 1; // Не реализован
+        
+
         // Начинаем спаунить первую волну
-        StartCoroutine(SpawnWave());
+        StartCoroutine(StartSpawner(goblinsCount, armoredGoblinsCount, strongGoblinsCount, juggernautsCount, waveCount, waveIncPercent, complexityParam));
     }
 
-    IEnumerator DelayedSpawn()
+
+    void SetEnemy(GameObject enemyPrefab)
     {
-        yield return new WaitForSeconds(timeBeforeSpawn);
+        Transform randomSpawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+        Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
     }
 
-    IEnumerator SpawnWave()
-    {
-        // Проигрываем звук начала волны
+
+
+    private float enemyCheckDelay = 5f; // Периодичность (в секундах) проверки присутствия гоблинов на уровне
+    IEnumerator StartSpawner(int GoblinsCount, int ArmoredGoblinsCount, int StrongGoblinsCount, int GoblinJuggernautsCount, int WavesCount, double waveIncPercent, double ComplexityParam) {
+
+        double startGoblinsWave = CountFirstUnitCount(GoblinsCount, waveIncPercent, WavesCount);
+        double startArmoredGoblinsWave = CountFirstUnitCount(ArmoredGoblinsCount, waveIncPercent, WavesCount);
+        double startStrongGoblinsWave = CountFirstUnitCount(StrongGoblinsCount, waveIncPercent, WavesCount);
+        double startJuggernautGoblinsWave = CountFirstUnitCount(GoblinJuggernautsCount, waveIncPercent, WavesCount);
+
+
+
+        for (int i = 0; i < WavesCount; i++) {
+
+            PlayWaveStartSound(); // Проигрываем звук знаменующий начало волны
+
+            // Спавним гоблинов
+            SpawnEnemy(ref startGoblinsWave, waveIncPercent, i, goblinPrefab);
+            SpawnEnemy(ref startStrongGoblinsWave, waveIncPercent, i, strongGoblinPrefab);
+            SpawnEnemy(ref startArmoredGoblinsWave, waveIncPercent, i, armoredGoblinPrefab);
+            SpawnEnemy(ref startJuggernautGoblinsWave, waveIncPercent, i, juggernautGoblinPrefab);
+
+
+            // Пока гоблины присутствуют на уровне - ждем
+            bool enemyIsAlive = true;
+
+            while (enemyIsAlive) {
+
+                // Ждем с заданной переодичностью
+                yield return new WaitForSeconds(enemyCheckDelay);
+
+                // Проверяем присутствие гоблинов на уровне
+                enemyIsAlive = EnemyExists();
+            }
+
+            // Ждем перед началом новой волны
+            yield return new WaitForSeconds(timeBetweenWaves);
+        }
+
+
+        Debug.Log($"Значение startGoblinsWave = {Math.Round(startGoblinsWave)}");
+
+        // Игра завершена победой игрока
+        IsGameFinished = true;
+        mainTower.GameOver(gameOverText);
+
+    }
+
+
+    void SpawnEnemy(ref double waveCount, double incPercent, int waveIter, GameObject enemyPrefab) {
+        
+        if (waveIter > 0)
+        {
+            waveCount *= incPercent;
+        }
+
+        int spawnCount = (int) Math.Round(waveCount);
+
+        StartCoroutine(SpawnEnemies(enemyPrefab, spawnCount));
+    }
+
+
+
+    IEnumerator SpawnEnemies(GameObject enemyPrefab, int spawnCount) {
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            yield return new WaitForSeconds(timeBeforeSpawn);
+            SetEnemy(enemyPrefab);
+        }
+    }
+
+
+
+    double CountFirstUnitCount(double totalNumber, double incParam, int waves) {
+
+        return totalNumber / ((1 - Math.Pow(incParam, waves)) / (1 - incParam));
+    }
+
+
+
+    bool EnemyExists() {
+
+        return GameObject.FindGameObjectsWithTag("Enemy").Count() > 0;
+    }
+
+
+
+    void PlayWaveStartSound() {
+
         if (waveStartSound != null)
         {
             audioSource.clip = waveStartSound;
             audioSource.Play();
         }
-
-        // Увеличиваем номер текущей волны
-        currentWaveNumber++;
-
-        // Проверяем, достигнуто ли максимальное количество волн
-        if (currentWaveNumber <= maxWaves)
-        {
-            switch (currentWaveNumber)
-            {
-                case 1:
-                    SpawnGoblins(3);
-                    break;
-                case 2:
-                    SpawnGoblins(6);
-                    break;
-                case 3:
-                    SpawnGoblins(8);
-                    SpawnArmoredGoblins(1);
-                    break;
-                case 4:
-                    SpawnGoblins(10);
-                    SpawnArmoredGoblins(1);
-                    break;
-                case 5:
-                    SpawnGoblins(10);
-                    SpawnArmoredGoblins(2);
-                    break;
-                case 6:
-                    SpawnGoblins(12);
-                    SpawnArmoredGoblins(2);
-                    break;
-                case 7:
-                    SpawnGoblins(10);
-                    SpawnArmoredGoblins(2);
-                    SpawnStrongGoblins(1);
-                    break;
-                case 8:
-                    SpawnGoblins(13);
-                    SpawnArmoredGoblins(3);
-                    SpawnStrongGoblins(1);
-                    break;
-                case 9:
-                    SpawnGoblins(13);
-                    SpawnArmoredGoblins(3);
-                    SpawnStrongGoblins(2);
-                    break;
-                case 10:
-                    SpawnGoblins(15);
-                    SpawnArmoredGoblins(4);
-                    SpawnStrongGoblins(2);
-                    break;
-                case 11:
-                    SpawnGoblins(17);
-                    SpawnArmoredGoblins(4);
-                    SpawnStrongGoblins(2);
-                    break;
-                case 12:
-                    SpawnGoblins(17);
-                    SpawnArmoredGoblins(5);
-                    SpawnStrongGoblins(2);
-                    SpawnJaggernauts(1);
-                    break;
-                case 13:
-                    SpawnGoblins(20);
-                    SpawnArmoredGoblins(5);
-                    SpawnStrongGoblins(2);
-                    SpawnJaggernauts(1);
-                    break;
-                case 14:
-                    SpawnGoblins(20);
-                    SpawnArmoredGoblins(7);
-                    SpawnStrongGoblins(3);
-                    SpawnJaggernauts(1);
-                    break;
-                case 15:
-                    SpawnGoblins(20);
-                    SpawnArmoredGoblins(7);
-                    SpawnStrongGoblins(3);
-                    SpawnJaggernauts(2);
-                    break;
-            }
-            // Ждем перед началом следующей волны
-            yield return new WaitForSeconds(timeBetweenWaves);
-
-            // Запускаем спаун следующей волны
-            StartCoroutine(SpawnWave());
-        }
-        else
-        {
-            // Игра завершена
-            IsGameFinished = true;
-            mainTower.GameOver(gameOverText);
-
-        }
-    }
-
-    void SpawnGoblins(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            SpawnEnemy(goblinPrefab);
-        }
-    }
-
-    void SpawnArmoredGoblins(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            SpawnEnemy(armoredGoblinPrefab);
-        }
-    }
-
-    void SpawnStrongGoblins(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            SpawnEnemy(strongGoblinPrefab);
-        }
-    }
-
-    void SpawnJaggernauts(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            SpawnEnemy(juggernautGoblinPrefab); 
-        }
-    }
-
-    void SpawnEnemy(GameObject enemyPrefab)
-    {
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
-        StartCoroutine(DelayedSpawn());
     }
 }
-
-
-
-
-//using UnityEngine;
-//using System.Collections;
-
-//public class ObjectSpawner : MonoBehaviour
-//{
-//    public GameObject goblinPrefab;
-//    public GameObject armoredGoblinPrefab;
-//    public GameObject strongGoblinPrefab;
-//    public GameObject juggernautGoblinPrefab;
-
-//    public Transform[] spawnPoints;
-//    public float timeBeforeFirstWave = 5f;
-//    public float timeBetweenWaves = 10f;
-//    public float minSpawnDelay = 0.1f; // Минимальная задержка между спауном гоблинов
-//    public int maxWaves = 15;
-
-//    private int currentWaveNumber;
-//    public static bool IsGameFinished = false;
-
-//    private AudioSource audioSource;
-//    public AudioClip waveStartSound;
-
-//    void Start()
-//    {
-//        audioSource = gameObject.AddComponent<AudioSource>();
-//        currentWaveNumber = 1;
-//        StartCoroutine(DelayedStart());
-//    }
-
-//    IEnumerator DelayedStart()
-//    {
-//        yield return new WaitForSeconds(timeBeforeFirstWave);
-//        SpawnGoblins(3); // На первой волне вызываем 3 гоблина
-//    }
-
-//    IEnumerator SpawnWave(int goblinCount, int armoredCount, int strongCount, int juggernautCount)
-//    {
-//        PlayWaveStartSound();
-
-//        yield return new WaitForSeconds(minSpawnDelay); // Минимальная задержка перед началом спауна
-
-//        SpawnGoblins(goblinCount);
-//        yield return new WaitForSeconds(minSpawnDelay); // Минимальная задержка между типами врагов
-
-//        SpawnArmoredGoblins(armoredCount);
-//        yield return new WaitForSeconds(minSpawnDelay);
-
-//        SpawnStrongGoblins(strongCount);
-//        yield return new WaitForSeconds(minSpawnDelay);
-
-//        SpawnJuggernautGoblins(juggernautCount);
-
-//        yield return new WaitForSeconds(timeBetweenWaves);
-
-//        currentWaveNumber++;
-
-//        if (currentWaveNumber <= maxWaves)
-//        {
-//            int nextGoblinCount = goblinCount + (currentWaveNumber <= 5 ? 3 : 2);
-//            int nextArmoredCount = armoredCount + (currentWaveNumber % 2 == 0 ? 1 : 0);
-//            int nextStrongCount = strongCount + (currentWaveNumber % 3 == 0 ? 1 : 0);
-//            int nextJuggernautCount = juggernautCount + (currentWaveNumber % 6 == 0 ? 1 : 0);
-
-//            StartCoroutine(SpawnWave(nextGoblinCount, nextArmoredCount, nextStrongCount, nextJuggernautCount));
-//        }
-//        else
-//        {
-//            IsGameFinished = true;
-//        }
-//    }
-
-//    void PlayWaveStartSound()
-//    {
-//        if (waveStartSound != null)
-//        {
-//            audioSource.clip = waveStartSound;
-//            audioSource.Play();
-//        }
-//    }
-
-//    void SpawnGoblins(int count)
-//    {
-//        for (int i = 0; i < count; i++)
-//        {
-//            SpawnEnemy(goblinPrefab);
-//            yield return new WaitForSeconds(minSpawnDelay);
-//        }
-//    }
-
-//    void SpawnArmoredGoblins(int count)
-//    {
-//        for (int i = 0; i < count; i++)
-//        {
-//            SpawnEnemy(armoredGoblinPrefab);
-//            yield return new WaitForSeconds(minSpawnDelay);
-//        }
-//    }
-
-//    void SpawnStrongGoblins(int count)
-//    {
-//        for (int i = 0; i < count; i++)
-//        {
-//            SpawnEnemy(strongGoblinPrefab);
-//            yield return new WaitForSeconds(minSpawnDelay);
-//        }
-//    }
-
-//    void SpawnJuggernautGoblins(int count)
-//    {
-//        for (int i = 0; i < count; i++)
-//        {
-//            SpawnEnemy(juggernautGoblinPrefab);
-//            yield return new WaitForSeconds(minSpawnDelay);
-//        }
-//    }
-
-//    void SpawnEnemy(GameObject enemyPrefab)
-//    {
-//        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-//        Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
-//    }
-//}

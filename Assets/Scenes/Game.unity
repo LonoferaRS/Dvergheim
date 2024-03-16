@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4754fbd4f416c4f9088928323f24dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTower: {fileID: 0}
+  mainTower: {fileID: 1350742227}
   goblinPrefab: {fileID: 8642772133260691458, guid: 5438bc9b3cb028244a8af9a3b5c55093, type: 3}
   armoredGoblinPrefab: {fileID: 6536425721223319549, guid: dc71c681b9e6115409b0e82c71241e6d, type: 3}
   strongGoblinPrefab: {fileID: 1534011856724551892, guid: 6f443771097b97342aab7b9c65b68334, type: 3}
