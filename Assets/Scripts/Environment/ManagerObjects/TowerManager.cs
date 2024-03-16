@@ -96,7 +96,7 @@ public class TowerManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Игра считается завершенной");
+            //Debug.Log("Игра считается завершенной");
         }
     }
 

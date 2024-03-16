@@ -22,7 +22,10 @@ public class Goblin : Enemy
         base.TakeDamage(damage, armorDecreaseConst);
 
         // Меняем количество HP в HealthBar
-        float currentHealthPercent = 100 * healthPoints / startHealth;
-        healthBarSlider.value = currentHealthPercent / 100;
+        if (healthBarSlider != null)
+        {
+            float currentHealthPercent = 100 * healthPoints / startHealth;
+            healthBarSlider.value = currentHealthPercent / 100;
+        }
     }
 }

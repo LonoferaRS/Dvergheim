@@ -23,13 +23,17 @@ public class ArmoredGoblin : Enemy
     {
         base.TakeDamage(damage, armorDecreaseConst);
 
-        // Меняем количество HP в HealthBar
-        float currentHealthPercent = 100 * healthPoints / startHealth;
-        healthBarSlider.value = currentHealthPercent / 100;
+        if (healthBarSlider != null) { 
+            // Меняем количество HP в HealthBar
+            float currentHealthPercent = 100 * healthPoints / startHealth;
+            healthBarSlider.value = currentHealthPercent / 100;
+        }
 
-        // Меняем количество брони в ArmorBar
-        float currentArmorPetcent = 100 * armorPoints / startArmor;
-        armorBarSlider.value = currentArmorPetcent / 100;
+        if (armorBarSlider != null) { 
+            // Меняем количество брони в ArmorBar
+            float currentArmorPetcent = 100 * armorPoints / startArmor;
+            armorBarSlider.value = currentArmorPetcent / 100;
+        }
 
         if (armorPoints == 0 && hasArmor == true)
         {
