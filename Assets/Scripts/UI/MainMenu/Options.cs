@@ -52,4 +52,8 @@ public class OptionsMenu : MonoBehaviour
         else
             PlayerPrefs.SetInt("MusicOff", 0);
     }
+    public void ToggleFullScreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
 }
