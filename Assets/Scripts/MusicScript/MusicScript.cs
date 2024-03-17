@@ -20,7 +20,7 @@ public class RandomMusicPlayer : MonoBehaviour
     }
     private void Update()
     {
-        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
+        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume") * PlayerPrefs.GetInt("MusicOff");
     }
     void PlayRandomMusic()
     {
