@@ -14,7 +14,10 @@ public class MusicManager : MonoBehaviour
         // Начинаем воспроизведение случайной трека обычной музыки
         PlayRandomNormalTrack();
     }
-
+    public void Update()
+    {
+        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume") * PlayerPrefs.GetInt("MusicOff");
+    }
     // Метод для проигрывания случайного трека обычной музыки
     void PlayRandomNormalTrack()
     {

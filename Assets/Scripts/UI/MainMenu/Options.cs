@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class OptionsMenu : MonoBehaviour 
 {
     public Toggle Death_toggle;
+    public Toggle Music_Off;
     public Slider Sfx_Slider;
     public Slider Music_Slider;
     public void Start()
@@ -17,6 +18,11 @@ public class OptionsMenu : MonoBehaviour
             Death_toggle.isOn = true;
         Sfx_Slider.value = PlayerPrefs.GetFloat("SfxVolume");
         Music_Slider.value = PlayerPrefs.GetFloat("MusicVolume");
+
+        if (PlayerPrefs.GetInt("MusicOff") == 0)
+            Music_Off.isOn = false;
+        else
+           Music_Off.isOn = true;
     }
     public void SetVolumeMusic(float volume)
     {
@@ -35,5 +41,15 @@ public class OptionsMenu : MonoBehaviour
         }
         else
             PlayerPrefs.SetInt("SfxDeath", 0);
+    }
+    public void SetVolumeMusicOff(bool volume)
+    {
+
+        if (volume)
+        {
+            PlayerPrefs.SetInt("MusicOff", 1);
+        }
+        else
+            PlayerPrefs.SetInt("MusicOff", 0);
     }
 }
