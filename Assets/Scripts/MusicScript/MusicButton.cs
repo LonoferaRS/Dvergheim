@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    public Toggle music_toggle;
     public AudioSource musicSource;
 
     public Sprite playSprite; // Поле для спрайта воспроизведения музыки
@@ -25,24 +26,17 @@ public class SoundManager : MonoBehaviour
 
     public void ToggleMusic()
     {
-        if (musicSource.isPlaying)
-        {
-            musicSource.Pause();
-        }
-        else
-        {
-            musicSource.Play();
-        }
-
+        PlayerPrefs.SetInt("MusicOff", PlayerPrefs.GetInt("MusicOff") == 1 ? 0:1);
+        music_toggle.isOn = PlayerPrefs.GetInt("MusicOff") == 1;
         UpdateButtonImage();
     }
 
-    private void UpdateButtonImage()
+    public void UpdateButtonImage()
     {
         // Изменяем изображение кнопки в зависимости от состояния музыки
         if (buttonImage != null) // Убедимся, что компонент Image был получен
         {
-            if (musicSource.isPlaying)
+            if (PlayerPrefs.GetInt("MusicOff")== 1)
             {
                 buttonImage.sprite = playSprite;
             }
