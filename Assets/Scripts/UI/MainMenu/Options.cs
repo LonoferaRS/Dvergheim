@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour 
 {
+    public SoundManager music_guitar_script;
     public Toggle Death_toggle;
     public Toggle Music_Off;
     public Slider Sfx_Slider;
@@ -44,13 +45,13 @@ public class OptionsMenu : MonoBehaviour
     }
     public void SetVolumeMusicOff(bool volume)
     {
-
         if (volume)
         {
             PlayerPrefs.SetInt("MusicOff", 1);
         }
         else
             PlayerPrefs.SetInt("MusicOff", 0);
+        music_guitar_script.UpdateButtonImage();
     }
     public void ToggleFullScreen()
     {
