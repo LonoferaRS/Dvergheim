@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Waypoint
   - MainTower
+  - GobllinSphereBoss
   layers:
   - Default
   - TransparentFX

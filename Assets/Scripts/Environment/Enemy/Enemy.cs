@@ -5,8 +5,8 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    protected float startHealth;
-    protected float startArmor;
+    public float startHealth;
+    public float startArmor;
     public float healthPoints { get; protected set; } = 100f;
     public float armorPoints { get; protected set; } = 0f;
     public float damage { get; protected set; }
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float moveSpeed { get; protected set; } = 3f;
     [SerializeField] private GameObject statsBarHolder;
 
-    private MainTower mainTower;
+    public MainTower mainTower;
 
     private bool isAlive = true;
     public GameObject deathEffectPrefab;
@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour
 
 
     // Метод для обработки смерти гоблина
-    void Die()
+    public virtual void Die()
     {
 
         GameObject deathEffectObject = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
@@ -197,21 +197,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
-
-
     private void TakeDamageOnHealth(float damage)
     {
         float healthAfterDamage = healthPoints - damage;
         healthPoints = healthAfterDamage > 0 ? healthAfterDamage : 0;
     }
 
+    public virtual void Heal(float healValue)
+    {
+        float healthAfterHeal = healthPoints + healValue;
+        if (healthAfterHeal > startHealth)
+        {
+            healthAfterHeal = startHealth;
+        }
+        healthPoints = healthAfterHeal; // Устанавливаем новое значение здоровья
+    }
 
 
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("MainTower"))
         {

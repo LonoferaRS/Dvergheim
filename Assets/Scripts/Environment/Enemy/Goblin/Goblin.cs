@@ -28,4 +28,5 @@ public class Goblin : Enemy
             healthBarSlider.value = currentHealthPercent / 100;
         }
     }
+
 }
