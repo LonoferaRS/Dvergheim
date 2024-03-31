@@ -8,7 +8,7 @@ public class StrongGoblin : Goblin
 
     private void Awake()
     {
-        healthPoints = 200f;
+        healthPoints = 400f;
         armorPoints = 0f;
         damage = 100f;
         costForDeath = 30f;

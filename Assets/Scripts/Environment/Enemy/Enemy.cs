@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     public GameObject deathEffectPrefab;
 
     private bool wasTurned = false;
-
+    public bool isInvulnerable = false;
     private Sprite enemySprite;
 
     void Start()
@@ -213,6 +213,19 @@ public class Enemy : MonoBehaviour
         healthPoints = healthAfterHeal; // ”станавливаем новое значение здоровь€
     }
 
+    public virtual void ArmorHeal(float armorHealValue)
+    {
+        if (armorPoints > 0)
+        {
+            float armorAfterHeal = armorPoints + armorHealValue;
+            if (armorAfterHeal > startArmor)
+            {
+                armorAfterHeal = startArmor;
+            }
+            armorPoints = armorAfterHeal;
+        }
+    }
+
 
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -229,5 +242,21 @@ public class Enemy : MonoBehaviour
             }
             else { Debug.Log("Ќевозможно нанести урон башне, так как MainTower is null"); Destroy(gameObject); }
         }
+    }
+
+    public virtual void Immortality()
+    {
+        Debug.Log("Immortality given");
+        isInvulnerable = true;
+        StartCoroutine(TemporaryImmortality());
+    }
+
+    private IEnumerator TemporaryImmortality()
+    {
+        yield return new WaitForSeconds(5f); // ∆дем 5 секунд
+
+        // ѕосле 5 секунд возвращаем переменной исходное значение
+        isInvulnerable = false;
+        Debug.Log("Immortality has ended.");
     }
 }

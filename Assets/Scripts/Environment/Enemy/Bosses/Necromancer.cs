@@ -19,10 +19,10 @@ public class NecromancerWeak : Enemy
     private Transform necromancer; // —сылка на некроманта
     private float followSpeed = 1f;
     private AudioSource audioSource;
-    private bool isInvulnerable = false;
 
     private void Awake()
     {
+        isInvulnerable = false;
         healthPoints = 4000f;
         armorPoints = 0f;
         damage = 50f;

@@ -68,13 +68,6 @@ public class MainTower : MonoBehaviour
 
     }
 
-
-
-
-
-
-
-
     void UpdateHealthUI()
     {
         // Обновляем значение хп бара

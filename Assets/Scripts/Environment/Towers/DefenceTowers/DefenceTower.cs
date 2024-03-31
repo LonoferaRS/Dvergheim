@@ -25,9 +25,9 @@ public class DefenceTower : Tower
 
     private bool isShooting = false;
     
+    public bool isDisactivated = false;
 
-
-
+    [SerializeField] public SpriteRenderer magicSpriteRenderer;
 
 
 
@@ -177,11 +177,14 @@ public class DefenceTower : Tower
     public GameObject currentShell { get; protected set; }
     protected virtual void Shoot()
     {
-        currentShell = Instantiate(shellPrefab, transform.position, transform.rotation);
+        if (!isDisactivated)
+        {
+            currentShell = Instantiate(shellPrefab, transform.position, transform.rotation);
 
-        currentShell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
+            currentShell.GetComponent<Rigidbody2D>().velocity = predicatedDirection * shellSpeed;
 
-        Debug.Log($"{name} is shooting");
+            Debug.Log($"{name} is shooting");
+        }
     }
 
 
@@ -201,4 +204,30 @@ public class DefenceTower : Tower
 
         return predictedPosition;
     }
+
+
+    public virtual void DefenceTowerDisactivate()
+    {
+        Debug.LogError("Disactivate has started.");
+        isDisactivated = true;
+        StartCoroutine(TemporaryDisactivate());
+        if (magicSpriteRenderer != null)
+        {
+            magicSpriteRenderer.enabled = true;
+        }
+    }
+
+    private IEnumerator TemporaryDisactivate()
+    {
+        yield return new WaitForSeconds(5f); // Ждем 5 секунд
+        // После 5 секунд возвращаем переменной исходное значение
+        isDisactivated = false;
+
+        if (magicSpriteRenderer != null)
+        {
+            magicSpriteRenderer.enabled = false;
+        }
+        Debug.LogError("Disactivate has ended.");
+    }
+
 }

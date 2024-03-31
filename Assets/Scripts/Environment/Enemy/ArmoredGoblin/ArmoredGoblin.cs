@@ -14,9 +14,10 @@ public class ArmoredGoblin : Enemy
     private void Awake()
     {
         healthPoints = 100f;
-        armorPoints = 100f;
+        armorPoints = 1000f;
         damage = 50f;
         costForDeath = 35f;
+        moveSpeed = 0f;
     }
 
     public override void TakeDamage(float damage, float armorDecreaseConst)

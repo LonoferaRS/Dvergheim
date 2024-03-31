@@ -8,6 +8,7 @@ TagManager:
   - Waypoint
   - MainTower
   - GobllinSphereBoss
+  - DefenceTower
   layers:
   - Default
   - TransparentFX

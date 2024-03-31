@@ -96,7 +96,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6601957474214019808}
@@ -143,7 +143,7 @@ SpriteRenderer:
   m_SortingLayerID: -1844185097
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6978138325492743441, guid: c6b576027e72f5d499bdbe91db3a4b2c, type: 3}
+  m_Sprite: {fileID: 1827608545522444418, guid: cbb1ff08b930cc248ac71f2d8652e936, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -330,6 +330,7 @@ MonoBehaviour:
   statsBarHolder: {fileID: 1438320374166090737}
   mainTower: {fileID: 0}
   deathEffectPrefab: {fileID: 1272173338048324461, guid: 3fe7667bd3581f948a3592a8d4ccfb01, type: 3}
+  isInvulnerable: 0
   healthBarSlider: {fileID: 2169777666196168340}
   lichPrefab: {fileID: 0}
   skeletonPrefab: {fileID: 4914140578442987670, guid: 9e79985b5495c4341a2d30f186e9886c, type: 3}
