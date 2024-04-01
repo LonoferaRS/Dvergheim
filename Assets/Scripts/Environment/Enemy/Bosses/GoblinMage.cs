@@ -11,7 +11,7 @@ public class GoblinMage : Enemy
     public string towerTag = "DefenceTower";
     public float abilityRadius = 25f; // Радиус действия способности бессмертия
     public float TowerAbilityRadius = 20f; // Радиус действия способности дизактивации башен
-    public float ArmorHealAbilityRadius = 1f; // Радиус способности восстановления брони
+    public float ArmorHealAbilityRadius = 3f; // Радиус способности восстановления брони
     public float abilityInterval = 10f; // Интервал между применением способности бессмертия
     public float TowerAbilityInterval = 12f; // Интервал между применением способности дизактивации башен
     public float SelfHealAbilityInterval = 15f; // Интервал между применением способности самолечения
@@ -113,24 +113,36 @@ public class GoblinMage : Enemy
     {
         // Находим все объекты с заданным тегом в заданном радиусе от позиции босса
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject farthestArmoredGoblin = null;
+        float maxDistance = 0f;
+
         // Проходим по всем найденным объектам
         foreach (GameObject enemyObject in enemies)
         {
-            // Проверяем расстояние до объекта
-            if (Vector3.Distance(transform.position, enemyObject.transform.position) <= ArmorHealAbilityRadius)
+            // Получаем компонент Enemy и проверяем тип
+            ArmoredGoblin armoredGoblin = enemyObject.GetComponent<ArmoredGoblin>();
+            if (armoredGoblin != null)
             {
-                Debug.Log("Дистанция до объекта излечения найдена");
-                // Получаем компонент Enemy и применяем способность
-                ArmoredGoblin enemy = enemyObject.GetComponent<Enemy>() as ArmoredGoblin;
-
-                Debug.Log($"Полученый класс Enemy == null?: {enemy == null}");
-                if (enemy != null)
+                // Проверяем расстояние до объекта
+                float distance = Vector3.Distance(transform.position, enemyObject.transform.position);
+                if (distance <= ArmorHealAbilityRadius && distance > maxDistance)
                 {
-                    Debug.Log("Вызов метода ArmorHeal");
-                    enemy.ArmorHeal(1000);
-                    Debug.Log("Вызов метода ArmorHeal произошел");
+                    maxDistance = distance;
+                    farthestArmoredGoblin = enemyObject;
                 }
             }
+        }
+
+        if (farthestArmoredGoblin != null)
+        {
+            // Применяем лечение к самому дальнему бронированному юниту
+            ArmoredGoblin armoredGoblin = farthestArmoredGoblin.GetComponent<ArmoredGoblin>();
+            armoredGoblin.ArmorHeal(1000);
+            Debug.Log("Лечение брони применено к самому дальнему бронированному юниту.");
+        }
+        else
+        {
+            Debug.Log("В радиусе действия способности нет бронированных юнитов.");
         }
     }
 

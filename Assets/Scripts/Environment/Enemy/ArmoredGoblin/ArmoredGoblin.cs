@@ -10,6 +10,7 @@ public class ArmoredGoblin : Enemy
     [SerializeField] private GameObject ArmorLosingPrefab;
     [SerializeField] private Sprite toGoblinSprite;
     private bool hasArmor = true;
+    public string enemyTag = "Enemy";
 
     private void Awake()
     {
@@ -61,5 +62,17 @@ public class ArmoredGoblin : Enemy
         }
         GameObject ArmorLosingObject = Instantiate(ArmorLosingPrefab, transform.position, Quaternion.identity);
         hasArmor = false;
+    }
+    public override void ArmorHeal(float armorHealValue)
+    {
+        if (armorPoints > 0)
+        {
+            float armorAfterHeal = armorPoints + armorHealValue;
+            if (armorAfterHeal > startArmor)
+            {
+                armorAfterHeal = startArmor;
+            }
+            armorPoints = armorAfterHeal;
+        }
     }
 }
