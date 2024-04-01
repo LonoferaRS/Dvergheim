@@ -119,12 +119,16 @@ public class GoblinMage : Enemy
             // Проверяем расстояние до объекта
             if (Vector3.Distance(transform.position, enemyObject.transform.position) <= ArmorHealAbilityRadius)
             {
+                Debug.Log("Дистанция до объекта излечения найдена");
                 // Получаем компонент Enemy и применяем способность
-                Enemy enemy = enemyObject.GetComponent<Enemy>();
-                if (enemy != null && enemy.startArmor != 0)
+                ArmoredGoblin enemy = enemyObject.GetComponent<Enemy>() as ArmoredGoblin;
+
+                Debug.Log($"Полученый класс Enemy == null?: {enemy == null}");
+                if (enemy != null)
                 {
-                    Debug.LogError("Armor Healed");
+                    Debug.Log("Вызов метода ArmorHeal");
                     enemy.ArmorHeal(1000);
+                    Debug.Log("Вызов метода ArmorHeal произошел");
                 }
             }
         }

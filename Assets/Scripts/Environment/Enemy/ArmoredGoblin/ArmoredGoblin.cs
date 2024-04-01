@@ -20,6 +20,8 @@ public class ArmoredGoblin : Enemy
         moveSpeed = 0f;
     }
 
+    public override bool HasArmor() { return true; }
+
     public override void TakeDamage(float damage, float armorDecreaseConst)
     {
         base.TakeDamage(damage, armorDecreaseConst);

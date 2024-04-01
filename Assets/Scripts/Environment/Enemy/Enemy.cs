@@ -57,6 +57,9 @@ public class Enemy : MonoBehaviour
     }
 
 
+    public virtual bool HasArmor() { return false; }
+
+
     // Метод который поворачивает спрайт врага на вектор движения
     private void TrunSprite(Vector2 turnDirection)
     {

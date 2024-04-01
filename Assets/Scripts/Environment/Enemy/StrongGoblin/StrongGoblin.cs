@@ -13,4 +13,6 @@ public class StrongGoblin : Goblin
         damage = 100f;
         costForDeath = 30f;
     }
+
+    public override bool HasArmor() { return false; }
 }
