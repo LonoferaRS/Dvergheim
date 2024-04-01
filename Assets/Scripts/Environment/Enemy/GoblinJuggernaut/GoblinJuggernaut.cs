@@ -12,4 +12,6 @@ public class GoblinJuggernaut : ArmoredGoblin
         damage = 500f;
         costForDeath = 75f;
     }
+
+    public override bool HasArmor() { return true; }
 }

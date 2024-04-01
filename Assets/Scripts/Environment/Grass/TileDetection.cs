@@ -6,13 +6,18 @@ using UnityEngine.Tilemaps;
 public class TileDetection : MonoBehaviour
 {
 
-    private Tilemap tileMap;
+    [SerializeField] private GameObject DecorativeTilemapObject;
+    [SerializeField] private TileBase grassTilePrefab;
+
+    private Tilemap grassTilemap;
+    private Tilemap decorativeTilemap;
 
 
 
     void Start()
     {
-        tileMap = GetComponentInParent<Tilemap>();
+        grassTilemap = GetComponentInParent<Tilemap>();
+        decorativeTilemap = DecorativeTilemapObject.GetComponent<Tilemap>();
     }
 
     
@@ -20,16 +25,25 @@ public class TileDetection : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (tileMap != null)
+            if (grassTilemap != null)
             {
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int tilePosition = grassTilemap.WorldToCell(clickPosition);
+                TileBase grassTile = grassTilemap.GetTile(tilePosition);
+                TileBase decorativeTile = decorativeTilemap.GetTile(tilePosition);
 
-                Vector3Int tilePosition = tileMap.WorldToCell(clickPosition);
-
-                TileBase tile = tileMap.GetTile(tilePosition);
-
-                if (tile != null) 
+                if (decorativeTile != null)
                 {
+                    // Удаляем декоративный тайл
+                    decorativeTilemap.SetTile(tilePosition, null);
+
+                    // Добавляем тайл замены
+                    grassTilemap.SetTile(tilePosition, grassTilePrefab);
+                }
+
+                if (grassTile != null || decorativeTile != null)
+                {
+                    // TowerManager получает позицию куда строить
                     TowerManager.instance.ReciveTilePosition(tilePosition);
                 }
             }
