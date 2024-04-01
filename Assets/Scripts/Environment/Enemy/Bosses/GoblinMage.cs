@@ -11,11 +11,19 @@ public class GoblinMage : Enemy
     public string towerTag = "DefenceTower";
     public float abilityRadius = 25f; // Радиус действия способности бессмертия
     public float TowerAbilityRadius = 20f; // Радиус действия способности дизактивации башен
-    public float ArmorHealAbilityRadius = 1f; // Радиус способности восстановления брони
+    public float ArmorHealAbilityRadius = 10f; // Радиус способности восстановления брони
     public float abilityInterval = 10f; // Интервал между применением способности бессмертия
     public float TowerAbilityInterval = 12f; // Интервал между применением способности дизактивации башен
     public float SelfHealAbilityInterval = 15f; // Интервал между применением способности самолечения
     public float ArmorHealAbilityInterval = 10f; // Интервал между применением способности восстановления брони
+    protected void Start()
+    {
+        base.Start();
+        //InvokeRepeating(nameof(ImmortalityAbility), 2f, abilityInterval);
+        InvokeRepeating(nameof(DefenceTowerDisactivateAbility), 2f, TowerAbilityInterval);
+        //InvokeRepeating(nameof(SelfHealAbility), 5f, SelfHealAbilityInterval);
+        InvokeRepeating(nameof(ArmorHealAbility), 1f, 2f);
+    }
     private void Awake()
     {
         healthPoints = 1500f;
@@ -23,11 +31,6 @@ public class GoblinMage : Enemy
         damage = 50f;
         costForDeath = 25f;
         moveSpeed = 0f;
-
-        InvokeRepeating(nameof(ImmortalityAbility), 2f, abilityInterval);
-        //InvokeRepeating(nameof(DefenceTowerDisactivateAbility), 2f, TowerAbilityInterval);
-        InvokeRepeating(nameof(SelfHealAbility), 5f, SelfHealAbilityInterval);
-        InvokeRepeating(nameof(ArmorHealAbility), 1f, ArmorHealAbilityInterval);
     }
     private void OnDrawGizmosSelectedImmortality()
     {
@@ -109,6 +112,18 @@ public class GoblinMage : Enemy
         }
     }
 
+    public override void Heal(float healvalue)
+    {
+        base.Heal(healvalue);
+        // Обновляем HealthBar
+        if (healthBarSlider != null)
+        {
+            float currentHealthPercent = 100 * healthPoints / startHealth;
+            healthBarSlider.value = currentHealthPercent / 100;
+
+        }
+    }
+
     private void ArmorHealAbility()
     {
         // Находим все объекты с заданным тегом в заданном радиусе от позиции босса
@@ -121,10 +136,10 @@ public class GoblinMage : Enemy
             {
                 // Получаем компонент Enemy и применяем способность
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
-                if (enemy != null && enemy.startArmor != 0)
+                if (enemy != null)
                 {
                     Debug.LogError("Armor Healed");
-                    enemy.ArmorHeal(1000);
+                    enemy.ArmorHeal(100);
                 }
             }
         }
