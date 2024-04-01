@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     public bool isInvulnerable = false;
     private Sprite enemySprite;
 
-    protected void Start()
+    void Start()
     {
 
         // Найти ближайшую путевую точку при старте

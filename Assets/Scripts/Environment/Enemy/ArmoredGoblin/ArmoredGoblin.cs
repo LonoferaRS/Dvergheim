@@ -41,17 +41,6 @@ public class ArmoredGoblin : Enemy
             LosingArmor();
         }
     }
-    public override void ArmorHeal(float healvalue)
-    {
-        base.ArmorHeal(healvalue);
-        // Обновляем
-        if (armorBarSlider != null)
-        {
-            float currentArmorPercent = 100 * armorPoints / startArmor;
-            armorBarSlider.value = currentArmorPercent / 100;
-
-        }
-    }
 
     private void LosingArmor()
     {
