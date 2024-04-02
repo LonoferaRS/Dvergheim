@@ -11,7 +11,7 @@ public class StrongGoblin : Goblin
         healthPoints = 400f;
         armorPoints = 0f;
         damage = 100f;
-        costForDeath = 30f;
+        costForDeath = 60f;
     }
 
     public override bool HasArmor() { return false; }

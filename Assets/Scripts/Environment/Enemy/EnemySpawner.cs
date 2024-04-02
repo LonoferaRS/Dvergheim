@@ -9,6 +9,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private MainTower mainTower;
     private string gameOverText = "You win!";
 
+    // Ќужно почистить эту свалку, котора€ осталась после прошлой реализации
     public GameObject goblinPrefab;
     public GameObject armoredGoblinPrefab;
     public GameObject strongGoblinPrefab;
@@ -23,6 +24,13 @@ public class ObjectSpawner : MonoBehaviour
     private int currentWaveSize; // “екущее количество врагов в волне
     private int currentWaveNumber; // “екущий номер волны
     public static bool IsGameFinished = false; // ‘лаг, указывающий, завершена ли игра
+
+    
+    public int goblinsCount = 100;
+    public int armoredGoblinsCount = 50;
+    public int strongGoblinsCount = 80;
+    public int juggernautsCount = 5;
+    public GameObject bossPrefab;
 
     public AudioClip waveStartSound;
     private AudioSource audioSource;
@@ -39,12 +47,6 @@ public class ObjectSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeFirstWave);
 
-        // «адаю общее количество гоблинов
-        int goblinsCount = 100;
-        int armoredGoblinsCount = 50;
-        int strongGoblinsCount = 80;
-        int juggernautsCount = 5;
-
         // «адаю параметры вли€ющие на волны гоблинов
         int waveCount = 8;
         double waveIncPercent = 1.4;
@@ -52,20 +54,22 @@ public class ObjectSpawner : MonoBehaviour
         
 
         // Ќачинаем спаунить первую волну
-        StartCoroutine(StartSpawner(goblinsCount, armoredGoblinsCount, strongGoblinsCount, juggernautsCount, waveCount, waveIncPercent, complexityParam));
+        StartCoroutine(StartSpawner(bossPrefab, goblinsCount, armoredGoblinsCount, strongGoblinsCount, juggernautsCount, waveCount, waveIncPercent, complexityParam));
     }
 
 
     void SetEnemy(GameObject enemyPrefab)
     {
-        Transform randomSpawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
+        if (enemyPrefab != null) { 
+            Transform randomSpawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+            Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
+        }
     }
 
 
 
     private float enemyCheckDelay = 5f; // ѕериодичность (в секундах) проверки присутстви€ гоблинов на уровне
-    IEnumerator StartSpawner(int GoblinsCount, int ArmoredGoblinsCount, int StrongGoblinsCount, int GoblinJuggernautsCount, int WavesCount, double waveIncPercent, double ComplexityParam) {
+    IEnumerator StartSpawner(GameObject bossPrefab, int GoblinsCount, int ArmoredGoblinsCount, int StrongGoblinsCount, int GoblinJuggernautsCount, int WavesCount, double waveIncPercent, double ComplexityParam) {
 
         double startGoblinsWave = CountFirstUnitCount(GoblinsCount, waveIncPercent, WavesCount);
         double startArmoredGoblinsWave = CountFirstUnitCount(ArmoredGoblinsCount, waveIncPercent, WavesCount);
@@ -83,6 +87,8 @@ public class ObjectSpawner : MonoBehaviour
             SpawnEnemy(ref startStrongGoblinsWave, waveIncPercent, i, strongGoblinPrefab);
             SpawnEnemy(ref startArmoredGoblinsWave, waveIncPercent, i, armoredGoblinPrefab);
             SpawnEnemy(ref startJuggernautGoblinsWave, waveIncPercent, i, juggernautGoblinPrefab);
+
+            if (i == WavesCount - 1) { SetEnemy(bossPrefab); }
 
 
             // ѕока гоблины присутствуют на уровне - ждем

@@ -10,10 +10,11 @@ public class GoblinMage : Enemy
     public string enemyTag = "Enemy";
     public string towerTag = "DefenceTower";
     public float abilityRadius = 25f; // Радиус действия способности бессмертия
-    public float TowerAbilityRadius = 20f; // Радиус действия способности дизактивации башен
+    public float TowerAbilityRadius = 10f; // Радиус действия способности дизактивации башен
+    private const float TowerStopRadius = 8f;
     public float ArmorHealAbilityRadius = 3f; // Радиус способности восстановления брони
     public float abilityInterval = 10f; // Интервал между применением способности бессмертия
-    public float TowerAbilityInterval = 12f; // Интервал между применением способности дизактивации башен
+    public float TowerAbilityInterval = 8f; // Интервал между применением способности дизактивации башен
     public float SelfHealAbilityInterval = 15f; // Интервал между применением способности самолечения
     public float ArmorHealAbilityInterval = 10f; // Интервал между применением способности восстановления брони
     private void Awake()
@@ -21,14 +22,16 @@ public class GoblinMage : Enemy
         healthPoints = 1500f;
         armorPoints = 0f;
         damage = 50f;
-        costForDeath = 25f;
-        moveSpeed = 0f;
+        costForDeath = 100f;
+        moveSpeed = 2.5f;
 
         InvokeRepeating(nameof(ImmortalityAbility), 2f, abilityInterval);
-        //InvokeRepeating(nameof(DefenceTowerDisactivateAbility), 2f, TowerAbilityInterval);
+        InvokeRepeating(nameof(DefenceTowerDisactivateAbility), 2f, TowerAbilityInterval);
         InvokeRepeating(nameof(SelfHealAbility), 5f, SelfHealAbilityInterval);
         InvokeRepeating(nameof(ArmorHealAbility), 1f, ArmorHealAbilityInterval);
+
     }
+
     private void OnDrawGizmosSelectedImmortality()
     {
         // Устанавливаем цвет гизмоны
@@ -89,12 +92,14 @@ public class GoblinMage : Enemy
         GameObject[] towers = GameObject.FindGameObjectsWithTag(towerTag);
         foreach (GameObject towerobject in towers)
         {
-            if (Vector3.Distance(transform.position, towerobject.transform.position) <= TowerAbilityRadius)
+            float distance = Vector3.Distance(transform.position, towerobject.transform.position);
+            Debug.Log($"Distance = {distance}");
+            Debug.Log($"Radius = {TowerStopRadius}");
+            if (distance <= TowerStopRadius)
             {
                 DefenceTower tower = towerobject.GetComponent<DefenceTower>(); // Получаем компонент башни
                 if (tower != null)
                 {
-                    Debug.LogError("Defence tower detected");
                     tower.DefenceTowerDisactivate(); // Выключаем башню
                 }
             }

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1438320374166090737}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.017, y: 0.141, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -334,12 +334,13 @@ MonoBehaviour:
   enemyTag: Enemy
   towerTag: DefenceTower
   abilityRadius: 10
-  TowerAbilityRadius: 30
+  TowerAbilityRadius: 10
   ArmorHealAbilityRadius: 1
   abilityInterval: 10
   TowerAbilityInterval: 12
   SelfHealAbilityInterval: 15
   ArmorHealAbilityInterval: 10
+  mainAimPrefab: {fileID: 2147647445003279502, guid: 2c4d4be7c9c4135489fa240699e00f6d, type: 3}
 --- !u!1001 &6681261509910535388
 PrefabInstance:
   m_ObjectHideFlags: 0

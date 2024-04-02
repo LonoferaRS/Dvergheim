@@ -208,7 +208,6 @@ public class DefenceTower : Tower
 
     public virtual void DefenceTowerDisactivate()
     {
-        Debug.LogError("Disactivate has started.");
         isDisactivated = true;
         StartCoroutine(TemporaryDisactivate());
         if (magicSpriteRenderer != null)
@@ -219,9 +218,12 @@ public class DefenceTower : Tower
 
     private IEnumerator TemporaryDisactivate()
     {
+        float temp = rotationSpeed;
+        rotationSpeed = 0;
         yield return new WaitForSeconds(5f); // Ждем 5 секунд
         // После 5 секунд возвращаем переменной исходное значение
         isDisactivated = false;
+        rotationSpeed = temp;
 
         if (magicSpriteRenderer != null)
         {

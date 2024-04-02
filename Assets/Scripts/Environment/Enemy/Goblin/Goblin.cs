@@ -13,7 +13,7 @@ public class Goblin : Enemy
         healthPoints = 100f;
         armorPoints = 0f;
         damage = 50f;
-        costForDeath = 25f;
+        costForDeath = 50f;
         moveSpeed = 3f;
     }
 

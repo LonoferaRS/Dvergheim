@@ -15,10 +15,10 @@ public class ArmoredGoblin : Enemy
     private void Awake()
     {
         healthPoints = 100f;
-        armorPoints = 1000f;
+        armorPoints = 100f;
         damage = 50f;
-        costForDeath = 35f;
-        moveSpeed = 0f;
+        costForDeath = 70f;
+        moveSpeed = 3f;
     }
 
     public override bool HasArmor() { return true; }

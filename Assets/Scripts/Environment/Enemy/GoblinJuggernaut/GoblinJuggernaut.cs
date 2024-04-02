@@ -10,7 +10,7 @@ public class GoblinJuggernaut : ArmoredGoblin
         healthPoints = 100f;
         armorPoints = 500f;
         damage = 500f;
-        costForDeath = 75f;
+        costForDeath = 200f;
     }
 
     public override bool HasArmor() { return true; }

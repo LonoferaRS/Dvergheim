@@ -292,12 +292,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d538344d049434186854bf30baf865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startHealth: 0
+  startArmor: 0
   statsBarHolder: {fileID: 5202260369324595975}
+  mainTower: {fileID: 0}
   deathEffectPrefab: {fileID: 1272173338048324461, guid: 3fe7667bd3581f948a3592a8d4ccfb01, type: 3}
+  isInvulnerable: 0
   healthBarSlider: {fileID: 5095568128008307405}
   armorBarSlider: {fileID: 4643757427147843660}
   ArmorLosingPrefab: {fileID: 2667942159112668709, guid: 822ac2ab9a8181c4a82c8d2bb5a8bc95, type: 3}
-  toGoblinSprite: {fileID: -1836630554280055203, guid: cc79356674685804b845757ca2f409d3, type: 3}
+  toGoblinSprite: {fileID: -6978138325492743441, guid: c6b576027e72f5d499bdbe91db3a4b2c, type: 3}
+  enemyTag: Enemy
 --- !u!1001 &5376634724794010801
 PrefabInstance:
   m_ObjectHideFlags: 0
