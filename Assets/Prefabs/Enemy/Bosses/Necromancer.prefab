@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f4c0fd043d8194bb8d6c2c79ceb152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 0
+  startHealth: 1
   startArmor: 0
   statsBarHolder: {fileID: 1438320374166090737}
   mainTower: {fileID: 0}
