@@ -592,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTower: {fileID: 1350742227}
+  bossPrefabs: []
   goblinPrefab: {fileID: 8642772133260691458, guid: 5438bc9b3cb028244a8af9a3b5c55093, type: 3}
   armoredGoblinPrefab: {fileID: 6536425721223319549, guid: dc71c681b9e6115409b0e82c71241e6d, type: 3}
   strongGoblinPrefab: {fileID: 1534011856724551892, guid: 6f443771097b97342aab7b9c65b68334, type: 3}
@@ -612,7 +613,7 @@ MonoBehaviour:
   armoredGoblinsCount: 50
   strongGoblinsCount: 60
   juggernautsCount: 5
-  bossPrefab: {fileID: 0}
+  bossPrefab: {fileID: 1714491874566543410, guid: d3d4debea7e487944b2e99090df26cd5, type: 3}
   waveStartSound: {fileID: 8300000, guid: e3730e58e5ffd124c8476222bc09feb1, type: 3}
 --- !u!82 &289421686
 AudioSource:

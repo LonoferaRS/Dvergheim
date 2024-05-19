@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System;
 using Unity.VisualScripting;
@@ -8,12 +9,15 @@ public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private MainTower mainTower;
     private string gameOverText = "You win!";
-
+    public List<GameObject> bossPrefabs = new List<GameObject>();
     // Нужно почистить эту свалку, которая осталась после прошлой реализации
     public GameObject goblinPrefab;
     public GameObject armoredGoblinPrefab;
     public GameObject strongGoblinPrefab;
     public GameObject juggernautGoblinPrefab;
+    public GameObject bossPrefab;
+    public GameObject bossPrefab2;
+    public GameObject bossPrefab3;
     public Transform[] spawnPoints; // Массив точек спавна
     public float timeBeforeFirstWave = 5f; // Время до появления первой волны
     public float timeBetweenWaves = 10f; // Время между волнами
@@ -30,7 +34,6 @@ public class ObjectSpawner : MonoBehaviour
     public int armoredGoblinsCount = 50;
     public int strongGoblinsCount = 80;
     public int juggernautsCount = 5;
-    public GameObject bossPrefab;
 
     public AudioClip waveStartSound;
     private AudioSource audioSource;
@@ -38,6 +41,9 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        bossPrefabs.Add(bossPrefab);
+        bossPrefabs.Add(bossPrefab2); 
+        bossPrefabs.Add(bossPrefab3);
 
         // Ждем перед появлением первой волны
         StartCoroutine(DelayedStart());
@@ -75,20 +81,31 @@ public class ObjectSpawner : MonoBehaviour
         double startArmoredGoblinsWave = CountFirstUnitCount(ArmoredGoblinsCount, waveIncPercent, WavesCount);
         double startStrongGoblinsWave = CountFirstUnitCount(StrongGoblinsCount, waveIncPercent, WavesCount);
         double startJuggernautGoblinsWave = CountFirstUnitCount(GoblinJuggernautsCount, waveIncPercent, WavesCount);
+        List<int> spawnedBossIndices = new List<int>();
 
 
-
-        for (int i = 0; i < WavesCount; i++) {
+        for (int i = 0; i < WavesCount; i++) 
+        {
 
             PlayWaveStartSound(); // Проигрываем звук знаменующий начало волны
-
+            
+            
             // Спавним гоблинов
             SpawnEnemy(ref startGoblinsWave, waveIncPercent, i, goblinPrefab);
             SpawnEnemy(ref startStrongGoblinsWave, waveIncPercent, i, strongGoblinPrefab);
             SpawnEnemy(ref startArmoredGoblinsWave, waveIncPercent, i, armoredGoblinPrefab);
             SpawnEnemy(ref startJuggernautGoblinsWave, waveIncPercent, i, juggernautGoblinPrefab);
 
-            if (i == WavesCount - 1) { SetEnemy(bossPrefab); }
+            if (i%5==0) 
+            {
+            int bossIndex = UnityEngine.Random.Range(0, bossPrefabs.Count);
+            while (spawnedBossIndices.Contains(bossIndex))
+                {
+                bossIndex = UnityEngine.Random.Range(0, bossPrefabs.Count);
+                }
+            spawnedBossIndices.Add(bossIndex);
+            SetEnemy(bossPrefabs[bossIndex]);
+            }
 
 
             // Пока гоблины присутствуют на уровне - ждем
