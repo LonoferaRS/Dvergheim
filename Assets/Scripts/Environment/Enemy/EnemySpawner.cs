@@ -31,7 +31,6 @@ public class ObjectSpawner : MonoBehaviour
     public int strongGoblinsCount = 80;
     public int juggernautsCount = 5;
     public GameObject bossPrefab;
-    public int bossCount = 100; // количество боссов
 
     public AudioClip waveStartSound;
     private AudioSource audioSource;
@@ -55,7 +54,7 @@ public class ObjectSpawner : MonoBehaviour
         
 
         // Начинаем спаунить первую волну
-        StartCoroutine(StartSpawner(bossPrefab, bossCount ,goblinsCount, armoredGoblinsCount, strongGoblinsCount, juggernautsCount, waveCount, waveIncPercent, complexityParam));
+        StartCoroutine(StartSpawner(bossPrefab, goblinsCount, armoredGoblinsCount, strongGoblinsCount, juggernautsCount, waveCount, waveIncPercent, complexityParam));
     }
 
 
@@ -70,18 +69,16 @@ public class ObjectSpawner : MonoBehaviour
 
 
     private float enemyCheckDelay = 5f; // Периодичность (в секундах) проверки присутствия гоблинов на уровне
-    IEnumerator StartSpawner(GameObject bossPrefab,int bossCount, int GoblinsCount, int ArmoredGoblinsCount, int StrongGoblinsCount, int GoblinJuggernautsCount, int WavesCount, double waveIncPercent, double ComplexityParam) {
+    IEnumerator StartSpawner(GameObject bossPrefab, int GoblinsCount, int ArmoredGoblinsCount, int StrongGoblinsCount, int GoblinJuggernautsCount, int WavesCount, double waveIncPercent, double ComplexityParam) {
 
         double startGoblinsWave = CountFirstUnitCount(GoblinsCount, waveIncPercent, WavesCount);
         double startArmoredGoblinsWave = CountFirstUnitCount(ArmoredGoblinsCount, waveIncPercent, WavesCount);
         double startStrongGoblinsWave = CountFirstUnitCount(StrongGoblinsCount, waveIncPercent, WavesCount);
         double startJuggernautGoblinsWave = CountFirstUnitCount(GoblinJuggernautsCount, waveIncPercent, WavesCount);
-        double startBossWave= CountFirstUnitCount(bossCount, waveIncPercent, WavesCount);   
 
 
 
-        for (int i = 0; i < WavesCount; i++) 
-        {
+        for (int i = 0; i < WavesCount; i++) {
 
             PlayWaveStartSound(); // Проигрываем звук знаменующий начало волны
 
@@ -91,11 +88,7 @@ public class ObjectSpawner : MonoBehaviour
             SpawnEnemy(ref startArmoredGoblinsWave, waveIncPercent, i, armoredGoblinPrefab);
             SpawnEnemy(ref startJuggernautGoblinsWave, waveIncPercent, i, juggernautGoblinPrefab);
 
-            if (i == 1) 
-                {
-                    SpawnEnemy(ref startBossWave, waveIncPercent, i , bossPrefab);
-                    StartCoroutine(StartSpawner(bossPrefab, bossCount, 0, 0, 0, 0, 1, 1, 1));
-                }
+            if (i == WavesCount - 1) { SetEnemy(bossPrefab); }
 
 
             // Пока гоблины присутствуют на уровне - ждем
